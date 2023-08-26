@@ -154,8 +154,8 @@ function AppLayout() {
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {Links.map((link, idx) => (
+                <NavLink data={link} key={idx} />
               ))}
             </Stack>
           </Box>
