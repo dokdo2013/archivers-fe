@@ -10,9 +10,10 @@
 
 ## 내부 구현
 ### 기술 스택
-- Next.js (FE+BE)
-- Chakra UI
-- Supabase (Database, Auth)
+- Framework : Next.js
+- Design System : Chakra UI & Tailwind CSS
+- Data Fetch : SWR
+- Database : Supabase (Database, Auth)
 
 ### 크롤링 방법
 - 아프리카TV 내부 API를 따와서 Next API로 엔드포인트를 만들고, Kubernetes 내부에서 호출하는 Cronjob으로 실행시킨다.
