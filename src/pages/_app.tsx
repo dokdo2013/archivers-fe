@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Heading } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 
 import {
@@ -49,8 +49,12 @@ const Links = [
     href: "/youtube",
   },
   {
-    name: "서비스 안내",
+    name: "방송 공지사항",
     href: "/notice",
+  },
+  {
+    name: "서비스 안내",
+    href: "/intro",
   },
 ];
 
@@ -87,8 +91,8 @@ function AppLayout() {
   return (
     <>
       <Head>
-        <title>LEAVEN VOD</title>
-        <meta name="description" content="LEAVEN VOD" />
+        <title>LEAVEN Portal</title>
+        <meta name="description" content="LEAVEN Portal" />
         <link rel="icon" href="https://multi.leaven.team/leaven.png" />
       </Head>
       <Box
@@ -114,7 +118,9 @@ function AppLayout() {
                   alt="Leaven"
                   w={10}
                 />
-                <Text>Leaven VOD</Text>
+                <Heading as="h1" size="md">
+                  레븐 Portal
+                </Heading>
               </Flex>
             </Link>
             <HStack

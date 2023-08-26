@@ -17,22 +17,12 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const IndexPage = () => {
-  // pagination with query
-  const router = useRouter();
-  const { page } = router.query;
-
   const { data, error, isLoading } = useGetVideos({
-    page: Number(page) || 1,
+    page: 1,
   });
 
   const { data: liveBj } = useGetLive("all");
   const mainColor = useColorModeValue("gray.200", "gray.700");
-
-  useEffect(() => {
-    if (!page && page === "") {
-      router.push("/?page=1");
-    }
-  }, [page, router]);
 
   return (
     <div>
@@ -42,7 +32,7 @@ const IndexPage = () => {
             LIVE 방송중!
           </Heading>
 
-          <Flex direction={"row"} mt={2} gap={2}>
+          <Flex direction={"row"} mt={2} gap={2} flexWrap={"wrap"}>
             {liveBj &&
               liveBj.length > 0 &&
               liveBj?.map((bj: any) => (
@@ -88,7 +78,7 @@ const IndexPage = () => {
       )}
 
       <Heading as="h2" size="md" mb={5}>
-        최신 영상
+        최신 VOD
       </Heading>
       {isLoading && <div>Loading...</div>}
       <SimpleGrid columns={5} spacing={5} minChildWidth="240px">
@@ -96,29 +86,6 @@ const IndexPage = () => {
           <VideoCard key={video.id} {...video} />
         ))}
       </SimpleGrid>
-
-      <Flex
-        justify={
-          page === "1" || page === undefined ? "flex-end" : "space-between"
-        }
-        mt={10}
-      >
-        {page !== "1" && page !== undefined && (
-          <Button
-            onClick={() => router.push(`/?page=${Number(page) - 1}`)}
-            justifyContent={""}
-          >
-            ← 이전 페이지
-          </Button>
-        )}
-        {data?.length && data?.length === 60 && (
-          <Button
-            onClick={() => router.push(`/?page=${Number(page || 1) + 1}`)}
-          >
-            다음 페이지 →
-          </Button>
-        )}
-      </Flex>
     </div>
   );
 };
