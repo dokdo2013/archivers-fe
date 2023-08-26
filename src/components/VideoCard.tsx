@@ -47,7 +47,7 @@ const VideoCard = (video: any) => {
         <Flex direction={"row"} mt={2} gap={2}>
           <a
             href={
-              isLive ? `https://play.afreecatv.com/${bjInfo.id}` : bjInfo?.link
+              isLive ? `https://play.afreecatv.com/${bjInfo?.id}` : bjInfo?.link
             }
             target="_blank"
             className="min-w-[36px] min-h-[36px]"
