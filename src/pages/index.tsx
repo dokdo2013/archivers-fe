@@ -14,10 +14,10 @@ const IndexPage = () => {
   });
 
   useEffect(() => {
-    if (!page) {
+    if (!page && page === "") {
       router.push("/?page=1");
     }
-  }, [page]);
+  }, [page, router]);
 
   return (
     <div>
@@ -38,7 +38,9 @@ const IndexPage = () => {
           </Button>
         )}
         {data?.length && data?.length === 60 && (
-          <Button onClick={() => router.push(`/?page=${Number(page) + 1}`)}>
+          <Button
+            onClick={() => router.push(`/?page=${Number(page || 1) + 1}`)}
+          >
             다음 페이지 →
           </Button>
         )}

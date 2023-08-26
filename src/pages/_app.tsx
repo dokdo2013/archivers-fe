@@ -56,7 +56,6 @@ const Links = [
 const NavLink = ({ data }: any) => {
   const router = useRouter();
   const currentPath = router.pathname;
-  console.log(currentPath);
 
   const bgColor = useColorModeValue("gray.200", "gray.700");
 

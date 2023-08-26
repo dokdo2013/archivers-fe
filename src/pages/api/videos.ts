@@ -92,7 +92,6 @@ export default async function handler(
   if (end_date !== "" && end_date !== undefined) {
     query = query.lte("uploaded_at", end_date);
   }
-  console.log(query);
 
   const { data, error } = await query;
 
