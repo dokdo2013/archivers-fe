@@ -25,6 +25,7 @@ import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 interface Props {
   children: React.ReactNode;
@@ -85,6 +86,11 @@ function AppLayout() {
 
   return (
     <>
+      <Head>
+        <title>LEAVEN VOD</title>
+        <meta name="description" content="LEAVEN VOD" />
+        <link rel="icon" href="https://multi.leaven.team/leaven.png" />
+      </Head>
       <Box
         bg={useColorModeValue("gray.100", "gray.900")}
         px={4}
