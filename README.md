@@ -1,12 +1,12 @@
-# Leaven VOD
+# Leaven Portal
 
-세계 최강 버츄얼 크루 Leaven의 VOD와 클립들을 한 군데서 모아서 보여주기 위한 사이트
+버츄얼 최강크루 Leaven의 대부분을 모아서 보여주기 위한 사이트입니다. '아무 손 대지 않아도 돌아가는 사이트'가 되는게 최종 목표입니다.
 
-[https://vod.leaven.team](https://vod.leaven.team)
+[https://leaven.team](https://leaven.team)
 
 ## 특징
-- 정기적인 크롤링을 통해 데이터를 자체 DB에 수집한다
-- 주기적인 확인을 거쳐 삭제되거나 비공개 처리된 영상을 삭제한다
+- 백엔드 서버를 따로 두지 않고 Next.js만으로 모든 비즈니스 로직을 처리합니다.
+- 정기적인 크론성 작업을 통해 데이터가 자동으로 적재되고, 만료 처리될 수 있도록 합니다.
 
 ## 내부 구현
 ### 기술 스택
@@ -16,8 +16,8 @@
 - Database : Supabase (Database, Auth)
 
 ### 크롤링 방법
-- 아프리카TV 내부 API를 따와서 Next API로 엔드포인트를 만들고, Kubernetes 내부에서 호출하는 Cronjob으로 실행시킨다.
-- 외부를 통한 접근을 막기 위해 Cloudflare 단에서 접근을 제한한다. (내부 호출은 Cloudflare를 안 타니까 차단되지 않는다)
+- 아프리카TV 내부 API를 따와서 Next API로 엔드포인트를 만들고, Kubernetes 내부에서 호출하는 Cronjob으로 실행시킵니다.
+- 외부를 통한 접근을 막기 위해 Cloudflare 단에서 접근을 제한합니다. (내부 호출은 Cloudflare를 안 타니까 차단되지 않음)
 
 ### CI/CD
 - [쿠버네티스 클러스터](https://github.com/dokdo2013/haenu-cluster)에 배포
