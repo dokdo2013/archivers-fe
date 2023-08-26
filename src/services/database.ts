@@ -80,4 +80,8 @@ const getVideos = async (
   }
 };
 
-export { addVideo, getVideos };
+const getClient = () => {
+  return supabase;
+};
+
+export { addVideo, getVideos, getClient };
