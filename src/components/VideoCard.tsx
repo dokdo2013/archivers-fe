@@ -1,3 +1,4 @@
+import { useGetLive } from "@/fetchers/get-live";
 import { getBjInfo, showBjName, showTime } from "@/utils/util";
 import { Flex, Image, Tag, Text } from "@chakra-ui/react";
 
@@ -34,6 +35,8 @@ const VideoCard = (video: any) => {
   const bjName = showBjName(video?.bj_id);
   const bjInfo = getBjInfo(video?.bj_id);
 
+  const { data: isLive } = useGetLive(video?.bj_id);
+
   return (
     <Flex>
       <div key={video.id}>
@@ -43,7 +46,9 @@ const VideoCard = (video: any) => {
         </a>
         <Flex direction={"row"} mt={2} gap={2}>
           <a
-            href={bjInfo?.link}
+            href={
+              isLive ? `https://play.afreecatv.com/${bjInfo.id}` : bjInfo?.link
+            }
             target="_blank"
             className="min-w-[36px] min-h-[36px]"
           >
@@ -53,6 +58,9 @@ const VideoCard = (video: any) => {
               borderRadius="full"
               width={9}
               height={9}
+              style={
+                isLive ? { outline: "2px solid #f56565", padding: "2px" } : {}
+              }
             />
           </a>
           <Flex direction={"column"}>

@@ -47,7 +47,7 @@ export const useGetVideos = ({
     revalidateOnReconnect: true,
   };
 
-  const result = useSWR(["/hotclip", query], fetcher, option);
+  const result = useSWR(["/videos", query], fetcher, option);
 
   return result;
 };
