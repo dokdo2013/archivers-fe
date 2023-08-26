@@ -32,3 +32,13 @@ export const showBjName = (bj_id: string) => {
 
   return bj_id;
 };
+
+export const getBjInfo = (bj_id: string) => {
+  const bjInfo = leaven.find((creator) => creator.id === bj_id);
+
+  if (bjInfo) {
+    return bjInfo;
+  }
+
+  return null;
+};

@@ -31,6 +31,7 @@ export interface Video {
   uploaded_at: string;
   thumbnail: string;
   data: any;
+  video_id: string;
 }
 
 const addVideo = async (video: Video[]) => {

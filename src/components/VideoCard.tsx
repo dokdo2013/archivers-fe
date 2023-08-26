@@ -1,4 +1,4 @@
-import { showBjName, showTime } from "@/utils/util";
+import { getBjInfo, showBjName, showTime } from "@/utils/util";
 import { Flex, Image, Tag, Text } from "@chakra-ui/react";
 
 const VideoTypeBadge = (type: any) => {
@@ -32,20 +32,46 @@ const VideoCard = (video: any) => {
   // const date = dayjs(video?.uploaded_at).format("YYYY/MM/DD HH:mm");
   const date = showTime(video?.uploaded_at);
   const bjName = showBjName(video?.bj_id);
+  const bjInfo = getBjInfo(video?.bj_id);
 
   return (
     <Flex>
-      <a href={video.link} target="_blank" className="relative">
-        <div key={video.id}>
+      <div key={video.id}>
+        <a href={video.link} target="_blank" className="relative">
           <VideoTypeBadge type={video.type} />
           <Image src={video.thumbnail} alt={video.title} borderRadius="lg" />
-          <Text noOfLines={2}>{video.title}</Text>
-          <Flex gap={2}>
-            <Text fontSize="xs">{bjName}</Text>
-            <Text fontSize="xs">{date}</Text>
+        </a>
+        <Flex direction={"row"} mt={2} gap={2}>
+          <a
+            href={bjInfo?.link}
+            target="_blank"
+            className="min-w-[36px] min-h-[36px]"
+          >
+            <Image
+              src={bjInfo?.profile}
+              alt={bjInfo?.name}
+              borderRadius="full"
+              width={9}
+              height={9}
+            />
+          </a>
+          <Flex direction={"column"}>
+            <Text noOfLines={2} className="hover:underline">
+              <a href={video.link} target="_blank">
+                {video.title}
+              </a>
+            </Text>
+            <Flex gap={2}>
+              <Text fontSize="xs" className="hover:underline">
+                <a href={bjInfo?.link} target="_blank">
+                  {bjName}
+                </a>
+              </Text>
+              <Text fontSize="xs">{date}</Text>
+            </Flex>
           </Flex>
-        </div>
-      </a>
+        </Flex>
+      </div>
     </Flex>
   );
 };

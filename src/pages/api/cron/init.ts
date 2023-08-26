@@ -80,6 +80,7 @@ const init = async () => {
           uploaded_at: clip.reg_date,
           thumbnail: clip.ucc.thumb,
           data: clip,
+          video_id: clip.title_no,
         } as Video;
 
         initVideos.push(initVideo);
@@ -100,6 +101,7 @@ const init = async () => {
           uploaded_at: review.reg_date,
           thumbnail: review.ucc.thumb,
           data: review,
+          video_id: review.title_no,
         } as Video;
 
         initVideos.push(initVideo);
@@ -117,6 +119,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  // 나중에 init 필요할 때 주석 처리해서 사용하기
+  return;
+
   const result = await init();
 
   res.status(200).json(result);

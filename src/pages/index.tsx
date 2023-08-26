@@ -28,8 +28,13 @@ const IndexPage = () => {
         ))}
       </SimpleGrid>
 
-      <Flex justify={page === "1" ? "flex-end" : "space-between"} mt={10}>
-        {page !== "1" && (
+      <Flex
+        justify={
+          page === "1" || page === undefined ? "flex-end" : "space-between"
+        }
+        mt={10}
+      >
+        {page !== "1" && page !== undefined && (
           <Button
             onClick={() => router.push(`/?page=${Number(page) - 1}`)}
             justifyContent={""}
