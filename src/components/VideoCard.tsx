@@ -59,7 +59,7 @@ const VideoCard = (video: any) => {
               width={9}
               height={9}
               style={
-                isLive ? { outline: "2px solid #f56565", padding: "2px" } : {}
+                isLive ? { border: "2px solid #f56565", padding: "2px" } : {}
               }
             />
           </a>

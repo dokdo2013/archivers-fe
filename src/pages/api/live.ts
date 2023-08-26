@@ -10,10 +10,17 @@ export default async function handler(
   // 1. DB에서 라이브 정보를 불러온다
   const client = await getClient();
 
-  const { data: foundLive } = await client
-    .from("live")
-    .select("*")
-    .eq("bj_id", bj_id);
+  // if bj_id is all, then not execute eq function
+  let foundLive;
+  if (bj_id === "all") {
+    const { data } = await client.from("live").select("*").eq("is_live", true);
+    foundLive = data;
+
+    return res.status(200).json({ status: "ok", is_live: foundLive });
+  } else {
+    const { data } = await client.from("live").select("*").eq("bj_id", bj_id);
+    foundLive = data;
+  }
 
   if (foundLive === null) {
     return res.status(404).json({ status: "not found" });

@@ -59,6 +59,10 @@
   font-family: 'TheJamsil3Regular', sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'TheJamsil5Bold', sans-serif !important;
+}
+
 body {
   font-family: 'TheJamsil3Regular', sans-serif;
   color: rgb(var(--foreground-rgb));
