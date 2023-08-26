@@ -9,7 +9,7 @@ const fetcher = async (args: readonly [string, string]): Promise<any[]> => {
 
 export const useGetLive = (bj_id: string) => {
   let option = {
-    revalidateOnFocus: true,
+    revalidateOnFocus: false,
     revalidateOnReconnect: true,
   };
 
