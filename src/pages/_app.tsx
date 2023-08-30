@@ -35,26 +35,45 @@ const Links = [
   {
     name: "홈",
     href: "/",
+    paths: ["/"],
+  },
+  {
+    name: "피드",
+    href: "/feed",
+    paths: ["/feed"],
   },
   {
     name: "클립",
     href: "/clip",
+    paths: ["/clip"],
   },
   {
     name: "다시보기",
     href: "/review",
+    paths: ["/review"],
   },
   {
     name: "유튜브",
     href: "/youtube",
+    paths: ["/youtube"],
   },
   {
     name: "방송 공지사항",
     href: "/notice",
+    paths: ["/notice"],
   },
   {
     name: "서비스 안내",
     href: "/intro",
+    paths: [
+      "/intro",
+      "/intro/detail",
+      "/intro/roadmap",
+      "/intro/update",
+      "/intro/report",
+      "/intro/contribute",
+      "/intro/about",
+    ],
   },
 ];
 
@@ -75,7 +94,8 @@ const NavLink = ({ data }: any) => {
         textDecoration: "none",
         bg: useColorModeValue("gray.200", "gray.700"),
       }}
-      bg={currentPath === data.href ? bgColor : ""}
+      // bg={currentPath === data.href ? bgColor : ""}
+      bg={data.paths.includes(currentPath) ? bgColor : ""}
       href={data.href}
     >
       {data.name}
