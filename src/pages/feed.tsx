@@ -33,7 +33,7 @@ const Feed = () => {
   const { data: liveBj } = useGetLive("all");
 
   return (
-    <div>
+    <Box p={4}>
       <Container maxW="900px" mt={2}>
         <Heading as="h2" size="md">
           피드 (Beta)
@@ -213,7 +213,7 @@ const Feed = () => {
         })} */}
       </Container>
       {/* <SimpleGrid columns={5} spacing={5} minChildWidth="240px"></SimpleGrid> */}
-    </div>
+    </Box>
   );
 };
 

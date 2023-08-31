@@ -1,6 +1,6 @@
 import VideoCard from "@/components/VideoCard";
 import { useGetVideos } from "@/fetchers/get-videos";
-import { Button, Flex, SimpleGrid } from "@chakra-ui/react";
+import { Box, Button, Flex, SimpleGrid } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -21,7 +21,7 @@ const ClipPage = () => {
   }, [page, router]);
 
   return (
-    <div>
+    <Box p={4}>
       {isLoading && <div>Loading...</div>}
       <SimpleGrid columns={5} spacing={5} minChildWidth="240px">
         {data?.map((video) => (
@@ -49,7 +49,7 @@ const ClipPage = () => {
           </Button>
         )}
       </Flex>
-    </div>
+    </Box>
   );
 };
 

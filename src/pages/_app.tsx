@@ -58,7 +58,7 @@ const Links = [
     paths: ["/youtube"],
   },
   {
-    name: "방송 공지사항",
+    name: "방송공지",
     href: "/notice",
     paths: ["/notice"],
   },
@@ -77,7 +77,7 @@ const Links = [
   },
 ];
 
-const NavLink = ({ data }: any) => {
+const NavLink = ({ data, onClose }: any) => {
   const router = useRouter();
   const currentPath = router.pathname;
 
@@ -97,6 +97,11 @@ const NavLink = ({ data }: any) => {
       // bg={currentPath === data.href ? bgColor : ""}
       bg={data.paths.includes(currentPath) ? bgColor : ""}
       href={data.href}
+      onClick={() => {
+        if (onClose) {
+          onClose();
+        }
+      }}
     >
       {data.name}
     </Box>
@@ -187,7 +192,7 @@ function AppLayout() {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
               {Links.map((link, idx) => (
-                <NavLink data={link} key={idx} />
+                <NavLink data={link} key={idx} onClose={onClose} />
               ))}
             </Stack>
           </Box>
@@ -201,7 +206,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
       <AppLayout />
-      <Box p={4} pt={"80px"}>
+      <Box pt={"60px"}>
         <Component {...pageProps} />
       </Box>
     </ChakraProvider>

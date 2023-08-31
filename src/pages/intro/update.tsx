@@ -1,3 +1,4 @@
+import UpdateInfo from "@/constants/update.constant";
 import {
   Text,
   Container,
@@ -12,12 +13,14 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  Badge,
 } from "@chakra-ui/react";
+import dayjs from "dayjs";
 import Link from "next/link";
 
 const IntroUpdate = () => {
   return (
-    <Container maxW="1000px" mt={4}>
+    <Container maxW="1000px" mt={4} p={4}>
       <Breadcrumb fontWeight="medium" fontSize="xs">
         <BreadcrumbItem>
           <BreadcrumbLink as={Link} href="/intro">
@@ -36,41 +39,36 @@ const IntroUpdate = () => {
         업데이트 내역
       </Heading>
 
-      <Box mt={4}>
-        <Accordion>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  Section 1 title
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </AccordionPanel>
-          </AccordionItem>
+      <Box mt={6}>
+        <Accordion defaultIndex={[0]} allowMultiple>
+          {UpdateInfo.map((info, idx) => {
+            // 7일 이내의 업데이트는 NEW 뱃지 표시
+            const isNew = dayjs().diff(dayjs(info.date), "day") <= 7;
 
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  Section 2 title
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </AccordionPanel>
-          </AccordionItem>
+            return (
+              <AccordionItem key={idx}>
+                <h2>
+                  <AccordionButton>
+                    <Box as="span" flex="1" textAlign="left">
+                      {info.title}
+                      <Flex align="center">
+                        <Text fontSize={"sm"} color={"gray.500"}>
+                          {info.date}
+                        </Text>
+                        {isNew && (
+                          <Badge ml={2} colorScheme="green" borderRadius={"lg"}>
+                            NEW
+                          </Badge>
+                        )}
+                      </Flex>
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>{info.content}</AccordionPanel>
+              </AccordionItem>
+            );
+          })}
         </Accordion>
       </Box>
     </Container>

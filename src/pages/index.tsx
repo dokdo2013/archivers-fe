@@ -25,14 +25,20 @@ const IndexPage = () => {
   const mainColor = useColorModeValue("gray.200", "gray.700");
 
   return (
-    <div>
+    <Box p={4}>
       {liveBj && liveBj.length > 0 && (
         <Box mb={5}>
           <Heading as="h2" size="md" mb={5}>
             LIVE 방송중!
           </Heading>
 
-          <Flex direction={"row"} mt={2} gap={2} flexWrap={"wrap"}>
+          {/* <Flex direction={"row"} mt={2} gap={2} flexWrap={"wrap"}> */}
+          <SimpleGrid
+            columns={[1, 2, 3, 4, 6, 8]}
+            spacing={2}
+            // minChildWidth="180px"
+            // maxBlockSize={"240px"}
+          >
             {liveBj &&
               liveBj.length > 0 &&
               liveBj?.map((bj: any) => (
@@ -73,7 +79,8 @@ const IndexPage = () => {
                   </Flex>
                 </a>
               ))}
-          </Flex>
+            {/* </Flex> */}
+          </SimpleGrid>
         </Box>
       )}
 
@@ -86,7 +93,7 @@ const IndexPage = () => {
           <VideoCard key={video.id} {...video} />
         ))}
       </SimpleGrid>
-    </div>
+    </Box>
   );
 };
 
