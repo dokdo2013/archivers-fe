@@ -16,6 +16,9 @@ const UpdateInfo = [
           <ListItem>
             서비스 라이센스가 GNU GPL v3로 확정 공표되었습니다.
           </ListItem>
+          <ListItem>
+            트위치 생방송 여부도 확인할 수 있도록 업데이트되었습니다.
+          </ListItem>
         </UnorderedList>
       </div>
     ),
