@@ -206,7 +206,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
       <AppLayout />
-      <Box pt={"60px"}>
+      <Box pt={"64px"}>
         <Component {...pageProps} />
       </Box>
     </ChakraProvider>

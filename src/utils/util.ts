@@ -42,3 +42,13 @@ export const getBjInfo = (bj_id: string) => {
 
   return null;
 };
+
+export const getStreamingLink = (platform: string, bj_id: string) => {
+  if (platform === "twitch") {
+    return `https://www.twitch.tv/${bj_id}`;
+  } else if (platform === "afreeca") {
+    return `https://play.afreecatv.com/${bj_id}`;
+  } else {
+    return `https://play.afreecatv.com/${bj_id}`;
+  }
+};
