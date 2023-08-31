@@ -33,8 +33,8 @@ const Feed = () => {
   const { data: liveBj } = useGetLive("all");
 
   return (
-    <Box p={4}>
-      <Container maxW="900px" mt={2}>
+    <Box p={2}>
+      <Container maxW="xl" mt={2}>
         <Heading as="h2" size="md">
           피드 (Beta)
         </Heading>
