@@ -82,3 +82,25 @@ export const getBroadcastInfo = async (
     };
   }
 };
+
+export const getTwitchStreamInfo = async (userId: string) => {
+  const endpoint = `https://twapi.haenu.com/user/name/${userId}/stream`;
+
+  const res = await axios
+    .get(endpoint)
+    .then((res) => {
+      const data = res.data;
+      if (!data) {
+        return false;
+      }
+
+      return true;
+      // return res.data;
+    })
+    .catch((err) => {
+      return false;
+      // return err.response.data;
+    });
+
+  return res;
+};
