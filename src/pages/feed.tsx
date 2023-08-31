@@ -1,6 +1,5 @@
-import VideoCard from "@/components/VideoCard";
 import { useGetLive } from "@/fetchers/get-live";
-import { useGetVideos, useGetVideosInfinite } from "@/fetchers/get-videos";
+import { useGetVideosInfinite } from "@/fetchers/get-videos";
 import { getBjInfo } from "@/utils/util";
 import {
   AspectRatio,
@@ -11,6 +10,7 @@ import {
   Heading,
   Image,
   SimpleGrid,
+  Spinner,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -34,7 +34,6 @@ const Feed = () => {
 
   return (
     <div>
-      {isLoading && <div>Loading...</div>}
       <Container maxW="900px" mt={2}>
         <Heading as="h2" size="md">
           피드 (Beta)
@@ -44,6 +43,17 @@ const Feed = () => {
           가능하도록 업데이트할 예정입니다.
         </Text>
 
+        {isLoading && (
+          <Flex align={"center"} justify="center">
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </Flex>
+        )}
         <div>
           {data?.map((videos: any, idx) => {
             return (

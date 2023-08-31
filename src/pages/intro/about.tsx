@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-const IntroDetail = () => {
+const IntroAbout = () => {
   return (
     <Container maxW="1000px" mt={4}>
       <Breadcrumb fontWeight="medium" fontSize="xs">
@@ -21,13 +21,13 @@ const IntroDetail = () => {
 
         <BreadcrumbItem>
           <BreadcrumbLink as={Link} href="#">
-            기능별 소개
+            개발자 정보
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
 
       <Heading as="h1" fontSize={"2xl"} mt={1}>
-        기능별 소개
+        개발자 정보
       </Heading>
 
       <Text fontSize={"md"} mt={4}>
@@ -37,4 +37,4 @@ const IntroDetail = () => {
   );
 };
 
-export default IntroDetail;
+export default IntroAbout;
