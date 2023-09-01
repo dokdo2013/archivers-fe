@@ -2,7 +2,25 @@ import { ListItem, UnorderedList } from "@chakra-ui/react";
 
 const UpdateInfo = [
   {
-    date: "2023-08-31",
+    date: "2023-09-01 23:00",
+    title: "서비스 안내 페이지 일부 업데이트",
+    content: (
+      <div>
+        <UnorderedList>
+          <ListItem>
+            서비스 안내 페이지 내 로드맵 페이지가 개발되었습니다.
+          </ListItem>
+          <ListItem>
+            서비스 안내 페이지 내 버그 리포트 및 기능 제안 페이지가
+            개발되었습니다.
+          </ListItem>
+          <ListItem>미개발된 페이지에 안내가 추가되었습니다.</ListItem>
+        </UnorderedList>
+      </div>
+    ),
+  },
+  {
+    date: "2023-08-31 22:00",
     title: "[신규 기능] 피드 업데이트",
     content: (
       <div>
@@ -24,7 +42,7 @@ const UpdateInfo = [
     ),
   },
   {
-    date: "2023-08-27",
+    date: "2023-08-27 22:00",
     title: "레븐 Portal로 서비스명 변경",
     content: (
       <div>
@@ -41,7 +59,7 @@ const UpdateInfo = [
     ),
   },
   {
-    date: "2023-08-26",
+    date: "2023-08-26 18:00",
     title: "베타 첫 버전 출시!",
     content: (
       <div>

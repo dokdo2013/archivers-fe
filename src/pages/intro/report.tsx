@@ -6,6 +6,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Box,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -30,9 +31,16 @@ const IntroReport = () => {
         버그 리포트 및 기능 제안
       </Heading>
 
-      <Text fontSize={"md"} mt={4}>
+      {/* <Text fontSize={"md"} mt={4}>
         준비중입니다.
-      </Text>
+      </Text> */}
+      <Box my={6}>
+        <iframe
+          width="100%"
+          height="400px"
+          src="https://tally.so/embed/mVQxNy?alignLeft=1&hideTitle=1&dynamicHeight=1"
+        ></iframe>
+      </Box>
     </Container>
   );
 };
