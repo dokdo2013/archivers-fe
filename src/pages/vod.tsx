@@ -222,19 +222,6 @@ const VodPage = () => {
             >
               오래된순
             </Button>
-            <Button
-              colorScheme="yellow"
-              size={"sm"}
-              variant={searchOptions.sort === "view_cnt" ? "solid" : "outline"}
-              onClick={() => {
-                const newSearchOptions = { ...searchOptions };
-                newSearchOptions.sort = "view_cnt";
-                newSearchOptions.sort_type = "desc";
-                setSearchOptions(newSearchOptions);
-              }}
-            >
-              조회수순
-            </Button>
           </Flex>
 
           <Text fontSize="xs" color="gray.500" mb={2}>
