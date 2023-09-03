@@ -194,6 +194,7 @@ const IndexPage = () => {
                     <Flex justify={"space-between"} gap={4}>
                       <Text noOfLines={3}>
                         <div
+                          className="break-all"
                           dangerouslySetInnerHTML={{ __html: notice.content }}
                         ></div>
                       </Text>
