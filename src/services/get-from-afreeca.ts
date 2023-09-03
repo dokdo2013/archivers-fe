@@ -90,7 +90,7 @@ const getNotice = async (
       console.log(err);
     });
 
-  return res.data;
+  return res?.data;
 };
 
 export { getClips, getReviews, getNotice };
