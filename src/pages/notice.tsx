@@ -1,3 +1,4 @@
+import NoticeSkeleton from "@/components/skeleton/NoticeSkeleton";
 import { useGetLive } from "@/fetchers/get-live";
 import { useGetNotices } from "@/fetchers/get-notices";
 import { getBjInfo, showTime } from "@/utils/util";
@@ -15,6 +16,7 @@ import {
   Heading,
   IconButton,
   Image,
+  Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -39,6 +41,14 @@ const NoticePage = () => {
         <Heading as="h1" fontSize={"2xl"} mt={1}>
           최신 방송공지
         </Heading>
+
+        {isLoading && (
+          <Stack gap={8} my={4}>
+            <NoticeSkeleton />
+            <NoticeSkeleton />
+            <NoticeSkeleton />
+          </Stack>
+        )}
 
         {data?.map((notice: any, idx) => {
           const liveBjs = liveBj?.map((bj: any) => bj.bj_id);
@@ -103,6 +113,7 @@ const NoticePage = () => {
                 </Heading>
                 <Flex justify={"space-between"} gap={4}>
                   <div
+                    className="break-all"
                     dangerouslySetInnerHTML={{ __html: notice.content }}
                   ></div>
                   {notice.thumbnail && (
