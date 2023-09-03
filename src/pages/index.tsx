@@ -1,11 +1,13 @@
 import VideoCard from "@/components/VideoCard";
 import UpdateInfo from "@/constants/update.constant";
 import { useGetLive } from "@/fetchers/get-live";
+import { useGetNotices } from "@/fetchers/get-notices";
 import { useGetVideos } from "@/fetchers/get-videos";
 import { getBjInfo, getStreamingLink, showTime } from "@/utils/util";
 import {
   Alert,
   AlertIcon,
+  Avatar,
   Box,
   Button,
   Flex,
@@ -26,6 +28,12 @@ const IndexPage = () => {
   });
 
   const { data: liveBj } = useGetLive("all");
+
+  const { data: notice, isLoading: isNoticeLoading } = useGetNotices({
+    page: 1,
+    per_page: 10,
+  });
+
   const mainColor = useColorModeValue("gray.200", "gray.700");
 
   // 업데이트 일자가 3일 이내
@@ -117,9 +125,106 @@ const IndexPage = () => {
           </Box>
         )}
 
-        <Heading as="h2" size="md" mb={5}>
-          최신 VOD
-        </Heading>
+        <Flex align={"center"} justify={"space-between"} mb={5}>
+          <Heading as="h2" size="md">
+            최신 방송공지
+          </Heading>
+          <Link href="/notice">
+            <Button size="xs" variant={"outline"} colorScheme="blue">
+              + 더 보기
+            </Button>
+          </Link>
+        </Flex>
+
+        <Box overflow={"hidden"}>
+          <Flex direction={"row"} gap={2} wrap={"nowrap"} w="400vw" mb={5}>
+            {notice?.map((notice: any) => {
+              return (
+                <a href={notice.link} target="_blank" key={notice.id}>
+                  <Box
+                    backgroundColor={mainColor}
+                    p={4}
+                    minW={"200px"}
+                    h="100%"
+                    maxH={"240px"}
+                    borderRadius="lg"
+                  >
+                    <Flex mb={4}>
+                      <a
+                        href={getBjInfo(notice.bj_id)?.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Avatar
+                          src={getBjInfo(notice.bj_id)?.profile}
+                          name={getBjInfo(notice.bj_id)?.name}
+                          size={"md"}
+                          style={
+                            liveBj?.find(
+                              (bj: any) => bj?.bj_id === notice?.bj_id
+                            )
+                              ? { border: "2px solid #f56565", padding: "2px" }
+                              : {}
+                          }
+                        />
+                      </a>
+                      <Flex direction="column" ml={2} gap={0.5}>
+                        <a
+                          href={getBjInfo(notice.bj_id)?.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Text
+                            fontWeight="bold"
+                            fontSize="md"
+                            className="hover:underline"
+                          >
+                            {getBjInfo(notice.bj_id)?.name}
+                          </Text>
+                        </a>
+                        <Text fontSize="sm" color={"gray.500"}>
+                          {showTime(notice.notice_at)} (
+                          {dayjs(notice.notice_at).format("MM/DD HH:mm")})
+                        </Text>
+                      </Flex>
+                    </Flex>
+                    <Heading as="h2" fontSize={"xl"} mb={2}>
+                      {notice.title}
+                    </Heading>
+                    <Flex justify={"space-between"} gap={4}>
+                      <Text noOfLines={3}>
+                        <div
+                          dangerouslySetInnerHTML={{ __html: notice.content }}
+                        ></div>
+                      </Text>
+                      {notice.thumbnail && (
+                        <Image
+                          src={notice.thumbnail}
+                          alt={notice.title}
+                          w={"70px"}
+                          h={"70px"}
+                          borderRadius={"lg"}
+                        />
+                      )}
+                    </Flex>
+                  </Box>
+                </a>
+              );
+            })}
+          </Flex>
+        </Box>
+
+        <Flex align={"center"} justify={"space-between"} mb={5}>
+          <Heading as="h2" size="md">
+            최신 VOD
+          </Heading>
+          <Link href="/vod">
+            <Button size="xs" variant={"outline"} colorScheme="blue">
+              + 더 보기
+            </Button>
+          </Link>
+        </Flex>
+
         {isLoading && <div>Loading...</div>}
         <SimpleGrid columns={5} spacing={5} minChildWidth="240px">
           {data?.map((video) => (

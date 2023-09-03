@@ -2,6 +2,23 @@ import { ListItem, UnorderedList } from "@chakra-ui/react";
 
 const UpdateInfo = [
   {
+    date: "2023-09-03 17:30",
+    title: "방송공지 기능 추가",
+    content: (
+      <div>
+        <UnorderedList>
+          <ListItem>
+            이제 아프리카TV 방송국에 공지가 올라오면 레븐 Portal에서도 확인할 수
+            있습니다. 상단 방송공지 탭에서 확인할 수 있습니다.
+          </ListItem>
+          <ListItem>
+            메인 페이지에 최신 방송공지가 표시되도록 업데이트되었습니다.
+          </ListItem>
+        </UnorderedList>
+      </div>
+    ),
+  },
+  {
     date: "2023-09-03 10:00",
     title: "VOD 리스트 페이지 고도화",
     content: (
