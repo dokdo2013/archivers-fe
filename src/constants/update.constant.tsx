@@ -2,6 +2,37 @@ import { ListItem, UnorderedList } from "@chakra-ui/react";
 
 const UpdateInfo = [
   {
+    date: "2023-09-03 10:00",
+    title: "VOD 리스트 페이지 고도화",
+    content: (
+      <div>
+        <UnorderedList>
+          <ListItem>
+            기존에 클립, 다시보기, VOD를 각각 별도의 페이지로 나누어 보여주던
+            것을 통합하여 한 페이지에서 모두 볼 수 있도록 고도화되었습니다.
+          </ListItem>
+          <ListItem>
+            VOD 분류, 멤버별 분류, 정렬, 검색 등의 기능이 VOD 페이지에
+            추가되었습니다.
+          </ListItem>
+        </UnorderedList>
+      </div>
+    ),
+  },
+  {
+    date: "2023-09-02 00:30",
+    title: "www.leaven.team 주소 접속불가 현상 수정",
+    content: (
+      <div>
+        <UnorderedList>
+          <ListItem>
+            www.leaven.team 주소로 접속되지 않던 오류가 수정되었습니다.
+          </ListItem>
+        </UnorderedList>
+      </div>
+    ),
+  },
+  {
     date: "2023-09-01 23:00",
     title: "서비스 안내 페이지 일부 업데이트",
     content: (

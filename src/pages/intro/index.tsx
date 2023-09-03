@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const IntroIndex = () => {
   return (
-    <Container maxW="1000px" mt={4} p={4}>
+    <Container maxW="1000px" p={4}>
       <Heading as="h1" fontSize={"xl"}>
         서비스 안내
       </Heading>

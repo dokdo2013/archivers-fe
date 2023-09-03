@@ -32,7 +32,12 @@ export default async function handler(
   } = req.query;
 
   // validate query
-  if (type !== "all" && type !== "review" && type !== "clip") {
+  if (
+    type !== "all" &&
+    type !== "review" &&
+    type !== "clip" &&
+    type !== "youtube"
+  ) {
     res.status(400).json({ name: "Invalid type" });
     return;
   }

@@ -12,7 +12,7 @@ import Link from "next/link";
 
 const IntroReport = () => {
   return (
-    <Container maxW="1000px" mt={4} p={4}>
+    <Container maxW="1000px" p={4}>
       <Breadcrumb fontWeight="medium" fontSize="xs">
         <BreadcrumbItem>
           <BreadcrumbLink as={Link} href="/intro">

@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const IntroRoadmap = () => {
   return (
-    <Container maxW="1000px" mt={4} p={4}>
+    <Container maxW="1000px" p={4}>
       <Breadcrumb fontWeight="medium" fontSize="xs">
         <BreadcrumbItem>
           <BreadcrumbLink as={Link} href="/intro">
@@ -50,8 +50,8 @@ const IntroRoadmap = () => {
             예정입니다.
           </Text>
           <UnorderedList>
-            <ListItem>VOD 리스트 페이지 고도화</ListItem>
             <ListItem>삭제된 영상을 자동으로 감지하여 DB에서 삭제</ListItem>
+            <ListItem>아프리카TV 방송공지 지원</ListItem>
           </UnorderedList>
         </Text>
 
@@ -64,8 +64,9 @@ const IntroRoadmap = () => {
             아래 기능들은 개발 예정이며, 우선순위에 따라 개발될 예정입니다.
           </Text>
           <UnorderedList>
-            <ListItem>아프리카TV 방송공지 지원</ListItem>
             <ListItem>유튜브 영상 지원</ListItem>
+            <ListItem>멤버별 페이지 제작</ListItem>
+            <ListItem>VOD 리스트 페이지 페이지네이션 기능 추가</ListItem>
             <ListItem>로그인 기능 (로그인 수단 미확정)</ListItem>
             <ListItem>
               피드 고도화 (SNS 형식) - 로그인 기능이 선행 작업

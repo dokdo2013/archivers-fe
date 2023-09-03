@@ -43,19 +43,9 @@ const Links = [
     paths: ["/feed"],
   },
   {
-    name: "클립",
-    href: "/clip",
-    paths: ["/clip"],
-  },
-  {
-    name: "다시보기",
-    href: "/review",
-    paths: ["/review"],
-  },
-  {
-    name: "유튜브",
-    href: "/youtube",
-    paths: ["/youtube"],
+    name: "VOD",
+    href: "/vod",
+    paths: ["/vod"],
   },
   {
     name: "방송공지",
