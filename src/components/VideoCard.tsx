@@ -1,30 +1,23 @@
 import { useGetLive } from "@/fetchers/get-live";
 import { getBjInfo, showBjName, showTime } from "@/utils/util";
-import { Flex, Image, Tag, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
 const VideoTypeBadge = (type: any) => {
   return (
     <>
-      <Tag
-        size="sm"
-        colorScheme={type?.type === "review" ? "blue" : "yellow"}
-        borderRadius="lg"
+      <Box
+        backgroundColor={type?.type === "review" ? "blue.500" : "yellow.500"}
         position={"absolute"}
-        variant="solid"
+        color={"white"}
+        borderRadius={"lg"}
         top={1}
         left={1}
+        zIndex={99}
+        fontSize={"sm"}
+        className="px-2 py-1 block w-[-webkit-max-content] leading-[normal]"
       >
         {type?.type === "review" ? "다시보기" : "클립"}
-      </Tag>
-      {/* {type?.type === "review" ? (
-        <div className="absolute bg-indigo-500 text-white rounded-md px-2 py-1 text-sm top-1 left-1">
-          다시보기
-        </div>
-      ) : (
-        <div className="absolute bg-amber-500 text-white rounded-md px-2 py-1 text-sm top-1 left-1">
-          클립
-        </div>
-      )} */}
+      </Box>
     </>
   );
 };

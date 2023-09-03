@@ -14,6 +14,10 @@ const UpdateInfo = [
           <ListItem>
             메인 페이지에 최신 방송공지가 표시되도록 업데이트되었습니다.
           </ListItem>
+          <ListItem>
+            iOS 브라우저에서 클립/다시보기 Badge가 표시되지 않던 오류가
+            수정되었습니다.
+          </ListItem>
         </UnorderedList>
       </div>
     ),
