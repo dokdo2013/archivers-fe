@@ -18,6 +18,9 @@ const UpdateInfo = [
             iOS 브라우저에서 클립/다시보기 Badge가 표시되지 않던 오류가
             수정되었습니다.
           </ListItem>
+          <ListItem>
+            이미지 로딩시 레이아웃이 깨지던 문제를 수정했습니다.
+          </ListItem>
         </UnorderedList>
       </div>
     ),

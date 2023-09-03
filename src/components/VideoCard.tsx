@@ -1,6 +1,15 @@
 import { useGetLive } from "@/fetchers/get-live";
 import { getBjInfo, showBjName, showTime } from "@/utils/util";
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import {
+  AspectRatio,
+  Box,
+  Flex,
+  Image,
+  Img,
+  Skeleton,
+  Text,
+} from "@chakra-ui/react";
+import { useState } from "react";
 
 const VideoTypeBadge = (type: any) => {
   return (
@@ -27,15 +36,29 @@ const VideoCard = (video: any) => {
   const date = showTime(video?.uploaded_at);
   const bjName = showBjName(video?.bj_id);
   const bjInfo = getBjInfo(video?.bj_id);
+  const [isImgLoaded, setIsImgLoaded] = useState(false);
 
   const { data: isLive } = useGetLive(video?.bj_id);
 
   return (
     <Flex>
-      <div key={video.id}>
-        <a href={video.link} target="_blank" className="relative">
+      <div key={video.id} className="w-full">
+        <a href={video.link} target="_blank" className="relative min-h-[140px]">
           <VideoTypeBadge type={video.type} />
-          <Image src={video.thumbnail} alt={video.title} borderRadius="lg" />
+          <Flex>
+            {!isImgLoaded && (
+              <AspectRatio ratio={16 / 9} w={"100%"}>
+                <Skeleton borderRadius="lg" w={"100%"} h={"100%"} />
+              </AspectRatio>
+            )}
+            <Img
+              src={video.thumbnail}
+              alt={video.title}
+              borderRadius="lg"
+              loading="lazy"
+              onLoad={() => setIsImgLoaded(true)}
+            />
+          </Flex>
         </a>
         <Flex direction={"row"} mt={2} gap={2}>
           <a
@@ -45,12 +68,13 @@ const VideoCard = (video: any) => {
             target="_blank"
             className="min-w-[36px] min-h-[36px]"
           >
-            <Image
+            <Img
               src={bjInfo?.profile}
               alt={bjInfo?.name}
               borderRadius="full"
               width={9}
               height={9}
+              loading="lazy"
               style={
                 isLive ? { border: "2px solid #f56565", padding: "2px" } : {}
               }

@@ -51,7 +51,10 @@ const IntroRoadmap = () => {
           </Text>
           <UnorderedList>
             <ListItem>삭제된 영상을 자동으로 감지하여 DB에서 삭제</ListItem>
-            <ListItem>아프리카TV 방송공지 지원</ListItem>
+            <ListItem>
+              클립 명예의전당 - 매일 생성된 클립들 중 최고 조회수
+            </ListItem>
+            <ListItem>통합검색 기능</ListItem>
           </UnorderedList>
         </Text>
 
@@ -80,11 +83,8 @@ const IntroRoadmap = () => {
               클립 이상형월드컵 기능 - 플레이리스트 기능이 선행 작업
             </ListItem>
             <ListItem>커뮤니티 기능 - 로그인 기능이 선행 작업</ListItem>
-            <ListItem>검색 기능</ListItem>
             <ListItem>레븐 방송일정 캘린더 표시</ListItem>
-            <ListItem>
-              클립 명예의전당 - 매일 생성된 클립들 중 최고 조회수
-            </ListItem>
+            <ListItem>방송공지 페이지 고도화</ListItem>
           </UnorderedList>
         </Text>
 
