@@ -60,4 +60,37 @@ const getReviews = async (
   return res.data;
 };
 
-export { getClips, getReviews };
+/**
+ * 아프리카TV 공지사항 목록을 가져옵니다.
+ * @param bj BJ 아이디
+ * @param board_id 게시판 아이디
+ * @param page 조회할 페이지 번호
+ * @param per_page 한 페이지에 표시할 목록 개수
+ * @param field 검색 기준 (title, contents)
+ * @param keyword 검색어
+ * @param type 검색 기준 (all)
+ * @param months 검색 기간
+ * @returns
+ */
+const getNotice = async (
+  bj: string,
+  board_id: string,
+  page: number = 1,
+  per_page: number = 40,
+  field: string = "title,contents",
+  keyword: string = "",
+  type: string = "all",
+  months: string = ""
+) => {
+  const res = await axios
+    .get(
+      `https://bjapi.afreecatv.com/api/${bj}/board/${board_id}?page=${page}&per_page=${per_page}&field=${field}&keyword=${keyword}&type=${type}&months=${months}`
+    )
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return res.data;
+};
+
+export { getClips, getReviews, getNotice };
