@@ -85,7 +85,7 @@ const leaven = [
       "https://profile.img.afreecatv.com/LOGO/ek/ektha9511/ektha9511.jpg",
     link: "https://bj.afreecatv.com/ektha9511",
     provider_info: {
-      afreeca_notice_board: "89974885",
+      afreeca_notice_board: "95815822",
     },
   },
   {

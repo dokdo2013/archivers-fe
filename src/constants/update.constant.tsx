@@ -2,6 +2,20 @@ import { ListItem, UnorderedList } from "@chakra-ui/react";
 
 const UpdateInfo = [
   {
+    date: "2023-09-08 12:00",
+    title: "비에타 공지게시판 변경 반영",
+    content: (
+      <div>
+        <UnorderedList>
+          <ListItem>
+            비에타 공지 게시판이 변경되어 전체 공지사항 업데이트가 되지 않는
+            문제를 해결하였습니다.
+          </ListItem>
+        </UnorderedList>
+      </div>
+    ),
+  },
+  {
     date: "2023-09-03 17:30",
     title: "방송공지 기능 추가",
     content: (
