@@ -40,6 +40,12 @@
   font-weight: 800;
   font-style: normal;
 }
+@font-face {
+  font-family: 'PyeongChangPeace-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -61,6 +67,10 @@
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'TheJamsil5Bold', sans-serif !important;
+}
+
+.pyeongchang {
+  font-family: 'PyeongChangPeace-Bold', sans-serif !important;
 }
 
 body {
