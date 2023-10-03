@@ -83,6 +83,14 @@ const StreamerPage = () => {
               data.length < 10 &&
               [...Array(10 - data.length)].map((_, i) => <Box key={i} />)}
           </SimpleGrid>
+
+          {data && data.length === 0 ? (
+            <Flex justify={"center"}>
+              <Text>아직 다시보기가 없어요 😢</Text>
+            </Flex>
+          ) : (
+            <></>
+          )}
         </Flex>
       </Container>
     </>
