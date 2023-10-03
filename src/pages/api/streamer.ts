@@ -5,6 +5,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { streamer_id, streamer_name } = req.query;
+
   // const {
   //   bj_id,
   //   page,
@@ -29,6 +31,13 @@ export default async function handler(
     .from("streamer")
     .select("*")
     .order("id", { ascending: false });
+
+  if (streamer_id) {
+    query.eq("id", streamer_id);
+  } else if (streamer_name) {
+    query.eq("twitch_name", streamer_name);
+  }
+
   const { data, error } = await query;
 
   if (error) {

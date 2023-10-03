@@ -1,9 +1,10 @@
+import StreamerCard from "@/components/StreamerCard";
 import VideoCard from "@/components/VideoCard";
 import UpdateInfo from "@/constants/update.constant";
 import { useGetLive } from "@/fetchers/get-live";
 import { useGetNotices } from "@/fetchers/get-notices";
-import { useGetStreamer } from "@/fetchers/get-streamer";
-import { useGetVideos } from "@/fetchers/get-videos";
+import { useGetStreamers } from "@/fetchers/get-streamers";
+import { useGetVods } from "@/fetchers/get-vods";
 import { getBjInfo, getStreamingLink, showTime } from "@/utils/util";
 import {
   Alert,
@@ -22,16 +23,11 @@ import dayjs from "dayjs";
 import Link from "next/link";
 
 const IndexPage = () => {
-  const { data, error, isLoading } = useGetVideos({
+  const { data, error, isLoading } = useGetVods({
     page: 1,
   });
 
-  const { data: streamers, isLoading: isStreamerLoading } = useGetStreamer();
-
-  const { data: notice, isLoading: isNoticeLoading } = useGetNotices({
-    page: 1,
-    per_page: 10,
-  });
+  const { data: streamers, isLoading: isStreamerLoading } = useGetStreamers();
 
   const mainColor = useColorModeValue("gray.100", "gray.700");
 
@@ -40,66 +36,29 @@ const IndexPage = () => {
 
   return (
     <>
-      {hasUpdate && (
-        <Link href="/intro/update">
-          <Alert status="info" flexWrap={"wrap"}>
-            <AlertIcon />
-            <Text as="span" fontWeight="bold">
-              업데이트
-            </Text>
-            <Text as="span" ml={2}>
-              {UpdateInfo[0].title}
-            </Text>
-            <Text
-              as="span"
-              ml={2}
-              fontSize={"xs"}
-              fontWeight={"normal"}
-              color={"gray.500"}
-            >
-              {showTime(UpdateInfo[0].date)}
-            </Text>
-          </Alert>
-        </Link>
-      )}
       <Box p={4}>
-        <Flex align={"center"} justify={"space-between"} mb={5}>
+        <Flex align={"center"} justify={"space-between"} mb={5} wrap={"wrap"}>
           <Heading as="h2" size="md">
-            녹화 대상 스트리머 (총 {streamers?.length}명)
+            녹화 대상 스트리머 ({streamers?.length}명)
           </Heading>
-          <Link href="/notice">
-            <Button size="xs" variant={"outline"} colorScheme="blue">
-              신청하기
-            </Button>
-          </Link>
+          <Flex gap={2}>
+            <Link href="https://tgd.kr/s/seju22/71871184" target="_blank">
+              <Button size="xs" variant={"solid"} colorScheme="blue">
+                신청하기
+              </Button>
+            </Link>
+            <Link href="/streamer">
+              <Button size="xs" variant={"outline"} colorScheme="blue">
+                + 더 보기
+              </Button>
+            </Link>
+          </Flex>
         </Flex>
 
         {isStreamerLoading && <div>Loading...</div>}
         <Flex gap={2} mb={5} wrap={"wrap"} maxH={"140px"} overflow={"hidden"}>
           {streamers?.map((streamer) => (
-            <Box
-              key={streamer.id}
-              className={`rounded-lg py-2 px-3`}
-              bgColor={mainColor}
-            >
-              <Link href={`/streamer/${streamer.id}`}>
-                <Flex gap={2} align={"center"}>
-                  <Avatar
-                    name={streamer.twitch_name}
-                    src={streamer.profile_image_url}
-                    size={"md"}
-                  />
-                  <Flex direction={"column"} gap={1}>
-                    <Heading fontSize={"md"}>
-                      {streamer.twitch_display_name}
-                    </Heading>
-                    <Text fontSize={"xs"} color={"gray.500"}>
-                      {streamer.twitch_name}
-                    </Text>
-                  </Flex>
-                </Flex>
-              </Link>
-            </Box>
+            <StreamerCard streamer={streamer} key={streamer.id} />
           ))}
         </Flex>
         <SimpleGrid columns={5} spacing={5} minChildWidth="240px">
@@ -124,6 +83,9 @@ const IndexPage = () => {
           {data?.map((video) => (
             <VideoCard key={video.id} {...video} />
           ))}
+          {data &&
+            data.length < 10 &&
+            [...Array(10 - data.length)].map((_, i) => <Box key={i} />)}
         </SimpleGrid>
       </Box>
     </>

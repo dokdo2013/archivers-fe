@@ -1,5 +1,6 @@
 import { useGetLive } from "@/fetchers/get-live";
-import { getBjInfo, showBjName, showTime } from "@/utils/util";
+import { useGetStreamer } from "@/fetchers/get-streamer";
+import { showBjName, showTime } from "@/utils/util";
 import {
   AspectRatio,
   Box,
@@ -9,13 +10,14 @@ import {
   Skeleton,
   Text,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { useState } from "react";
 
 const VideoTypeBadge = (type: any) => {
   return (
     <>
       <Box
-        backgroundColor={type?.type === "review" ? "blue.500" : "yellow.500"}
+        backgroundColor={type?.type === "vod" ? "blue.500" : "red.500"}
         position={"absolute"}
         color={"white"}
         borderRadius={"lg"}
@@ -25,26 +27,26 @@ const VideoTypeBadge = (type: any) => {
         fontSize={"sm"}
         className="px-2 py-1 block w-[-webkit-max-content] leading-[normal]"
       >
-        {type?.type === "review" ? "다시보기" : "클립"}
+        {type?.type === "vod" ? "다시보기" : "LIVE"}
       </Box>
     </>
   );
 };
 
 const VideoCard = (video: any) => {
-  // const date = dayjs(video?.uploaded_at).format("YYYY/MM/DD HH:mm");
-  const date = showTime(video?.uploaded_at);
-  const bjName = showBjName(video?.bj_id);
-  const bjInfo = getBjInfo(video?.bj_id);
+  const date = showTime(video?.start_at);
   const [isImgLoaded, setIsImgLoaded] = useState(false);
 
-  const { data: isLive } = useGetLive(video?.bj_id);
+  const link = `/vod/${video?.stream_id}`;
+
+  const { data: streamer } = useGetStreamer(video?.streamer_id);
+  // const { data: isLive } = useGetLive(streamer?.twitch_name);
 
   return (
     <Flex>
       <div key={video.id} className="w-full">
-        <a href={video.link} target="_blank" className="relative min-h-[140px]">
-          <VideoTypeBadge type={video.type} />
+        <Link href={link} className="relative min-h-[140px]">
+          <VideoTypeBadge type={video.is_live ? "live" : "vod"} />
           <Flex>
             {!isImgLoaded && (
               <AspectRatio ratio={16 / 9} w={"100%"}>
@@ -52,45 +54,45 @@ const VideoCard = (video: any) => {
               </AspectRatio>
             )}
             <Img
-              src={video.thumbnail}
+              src={video.thumbnail_url}
               alt={video.title}
               borderRadius="lg"
               loading="lazy"
               onLoad={() => setIsImgLoaded(true)}
             />
           </Flex>
-        </a>
+        </Link>
         <Flex direction={"row"} mt={2} gap={2}>
-          <a
-            href={
-              isLive ? `https://play.afreecatv.com/${bjInfo?.id}` : bjInfo?.link
-            }
-            target="_blank"
+          <Link
+            // href={
+            //   isLive
+            //     ? `https://twitch.tv/${streamer?.twitch_id}`
+            //     : `/streamer/${streamer?.twitch_name}`
+            // }
+            href={`/streamer/${streamer?.twitch_name}`}
             className="min-w-[36px] min-h-[36px]"
           >
             <Img
-              src={bjInfo?.profile}
-              alt={bjInfo?.name}
+              src={streamer?.profile_image_url}
+              alt={streamer?.twitch_name}
               borderRadius="full"
               width={9}
               height={9}
               loading="lazy"
-              style={
-                isLive ? { border: "2px solid #f56565", padding: "2px" } : {}
-              }
+              // style={
+              //   isLive ? { border: "2px solid #f56565", padding: "2px" } : {}
+              // }
             />
-          </a>
+          </Link>
           <Flex direction={"column"}>
             <Text noOfLines={2} className="hover:underline">
-              <a href={video.link} target="_blank">
-                {video.title}
-              </a>
+              <Link href={link}>{video.title}</Link>
             </Text>
             <Flex gap={2}>
               <Text fontSize="xs" className="hover:underline">
-                <a href={bjInfo?.link} target="_blank">
-                  {bjName}
-                </a>
+                <Link href={`/streamer/${streamer?.twitch_name}`}>
+                  {streamer?.twitch_display_name}
+                </Link>
               </Text>
               <Text fontSize="xs">{date}</Text>
             </Flex>

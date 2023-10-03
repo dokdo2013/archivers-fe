@@ -5,12 +5,12 @@ interface Data {
   name: string;
 }
 
-// type : all, review, clip
-// bj_id : all, bj_id
+// type : all, stream, live
+// user_id : all, user_id
 // page : 1, 2, 3, ...
 // per_page : 60, 120, 180, ...
 // keyword : string
-// sort : reg_date, view_cnt
+// sort : reg_date, (view_cnt)
 // sort_type : asc, desc
 // start_date : string
 // end_date : string
@@ -21,7 +21,7 @@ export default async function handler(
 ) {
   const {
     type,
-    bj_id,
+    user_id,
     page,
     per_page,
     keyword,
@@ -34,15 +34,15 @@ export default async function handler(
   // validate query
   if (
     type !== "all" &&
-    type !== "review" &&
-    type !== "clip" &&
-    type !== "youtube"
+    type !== "vod" &&
+    type !== "live" &&
+    typeof type !== "string"
   ) {
     res.status(400).json({ name: "Invalid type" });
     return;
   }
-  if (bj_id !== "all" && typeof bj_id !== "string") {
-    res.status(400).json({ name: "Invalid bj_id" });
+  if (user_id !== "all" && typeof user_id !== "string") {
+    res.status(400).json({ name: "Invalid user_id" });
     return;
   }
   if (typeof page !== "string") {
@@ -53,7 +53,10 @@ export default async function handler(
     res.status(400).json({ name: "Invalid per_page" });
     return;
   }
-  if (sort !== "reg_date" && sort !== "view_cnt") {
+  if (
+    sort !== "reg_date"
+    // && sort !== "view_cnt"
+  ) {
     res.status(400).json({ name: "Invalid sort" });
     return;
   }
@@ -67,10 +70,10 @@ export default async function handler(
 
   const pageNumber = parseInt(page as string);
   const perPageNumber = parseInt(per_page as string);
-  const sanitezedSort = sort === "reg_date" ? "uploaded_at" : "view_count";
+  const sanitezedSort = sort === "reg_date" ? "start_at" : "view_count";
 
   const baseQuery = supabase
-    .from("video")
+    .from("stream")
     .select("*")
     .order(sanitezedSort, { ascending: sort_type === "asc" })
     .range(
@@ -81,12 +84,12 @@ export default async function handler(
   let query = baseQuery;
 
   if (type !== "all") {
-    query = query.eq("type", type);
+    query = query.eq("is_live", type === "live");
   }
-  if (bj_id !== "all") {
-    // bj_id는 comma로 구분된 string
-    const bj_ids = bj_id.split(",");
-    query = query.in("bj_id", bj_ids);
+  if (user_id !== "all") {
+    // user_id는 comma로 구분된 string
+    const user_ids = user_id.split(",");
+    query = query.in("streamer_id", user_ids);
   }
   if (keyword !== "" && keyword !== undefined) {
     query = query.ilike("title", `%${keyword}%`);

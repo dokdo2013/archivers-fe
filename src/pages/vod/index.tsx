@@ -1,5 +1,5 @@
 import VideoCard from "@/components/VideoCard";
-import { useGetVideos } from "@/fetchers/get-videos";
+import { useGetVods } from "@/fetchers/get-vods";
 import {
   Box,
   Button,
@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { useDebouncedValue, useWindowScroll } from "@mantine/hooks";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import leaven from "@/constants/leaven.constant";
+import { useGetStreamers } from "@/fetchers/get-streamers";
 
 const VodPage = () => {
   // pagination with query
@@ -28,20 +29,24 @@ const VodPage = () => {
   const [debouncedSearchKeyword] = useDebouncedValue(searchKeyword, 200);
   const [searchOptions, setSearchOptions] = useState({
     type: "all",
-    bj_id: [] as string[],
-    sort: "reg_date", // reg_date, view_cnt
+    user_id: [] as string[],
+    sort: "reg_date", // reg_date, (view_cnt)
     sort_type: "desc", // asc, desc
   });
 
-  const { data, error, isLoading } = useGetVideos({
+  const { data, error, isLoading } = useGetVods({
     type: searchOptions.type,
     page: Number(page) || 1,
-    bj_id:
-      searchOptions.bj_id.length > 0 ? searchOptions.bj_id.join(",") : "all",
+    user_id:
+      searchOptions.user_id.length > 0
+        ? searchOptions.user_id.join(",")
+        : "all",
     sort: searchOptions.sort,
     sort_type: searchOptions.sort_type,
     keyword: debouncedSearchKeyword,
   });
+
+  const { data: streamers, isLoading: isStreamerLoading } = useGetStreamers();
 
   useEffect(() => {
     if (!page && page === "") {
@@ -96,38 +101,26 @@ const VodPage = () => {
             <Button
               colorScheme="yellow"
               size={"sm"}
-              variant={searchOptions.type === "clip" ? "solid" : "outline"}
+              variant={searchOptions.type === "live" ? "solid" : "outline"}
               onClick={() => {
                 const newSearchOptions = { ...searchOptions };
-                newSearchOptions.type = "clip";
+                newSearchOptions.type = "live";
                 setSearchOptions(newSearchOptions);
               }}
             >
-              클립
+              LIVE
             </Button>
             <Button
               colorScheme="yellow"
               size={"sm"}
-              variant={searchOptions.type === "review" ? "solid" : "outline"}
+              variant={searchOptions.type === "vod" ? "solid" : "outline"}
               onClick={() => {
                 const newSearchOptions = { ...searchOptions };
-                newSearchOptions.type = "review";
+                newSearchOptions.type = "vod";
                 setSearchOptions(newSearchOptions);
               }}
             >
               다시보기
-            </Button>
-            <Button
-              colorScheme="yellow"
-              size={"sm"}
-              variant={searchOptions.type === "youtube" ? "solid" : "outline"}
-              onClick={() => {
-                const newSearchOptions = { ...searchOptions };
-                newSearchOptions.type = "youtube";
-                setSearchOptions(newSearchOptions);
-              }}
-            >
-              유튜브
             </Button>
           </Flex>
 
@@ -136,49 +129,54 @@ const VodPage = () => {
           </Text>
 
           <Heading as="h2" fontSize={"lg"} mt={8} mb={4}>
-            💎 멤버별 분류
+            💎 스트리머 분류
           </Heading>
 
-          <Flex gap={2} flexWrap={"wrap"} mb={2}>
+          <Flex gap={2} flexWrap={"wrap"} mb={2} maxH={300} overflow={"auto"}>
             <Button
               colorScheme="yellow"
               size={"sm"}
-              variant={searchOptions.bj_id.length === 0 ? "solid" : "outline"}
+              variant={searchOptions.user_id.length === 0 ? "solid" : "outline"}
               onClick={() => {
                 const newSearchOptions = { ...searchOptions };
-                newSearchOptions.bj_id = [];
+                newSearchOptions.user_id = [];
                 setSearchOptions(newSearchOptions);
               }}
             >
               전체
             </Button>
-            {leaven.map((member) => (
-              <Button
-                key={member.id}
-                colorScheme="yellow"
-                size={"sm"}
-                variant={
-                  searchOptions.bj_id.includes(member.id) ? "solid" : "outline"
-                }
-                onClick={() => {
-                  const newSearchOptions = { ...searchOptions };
-                  if (newSearchOptions.bj_id.includes(member.id)) {
-                    newSearchOptions.bj_id = newSearchOptions.bj_id.filter(
-                      (id) => id !== member.id
-                    );
-                  } else {
-                    newSearchOptions.bj_id.push(member.id);
+            {streamers &&
+              streamers?.length > 0 &&
+              streamers.map((member) => (
+                <Button
+                  key={member.id}
+                  colorScheme="yellow"
+                  size={"sm"}
+                  variant={
+                    searchOptions.user_id.includes(member.id)
+                      ? "solid"
+                      : "outline"
                   }
-                  setSearchOptions(newSearchOptions);
-                }}
-              >
-                {member.name}
-              </Button>
-            ))}
+                  onClick={() => {
+                    const newSearchOptions = { ...searchOptions };
+                    if (newSearchOptions.user_id.includes(member.id)) {
+                      newSearchOptions.user_id =
+                        newSearchOptions.user_id.filter(
+                          (id) => id !== member.id
+                        );
+                    } else {
+                      newSearchOptions.user_id.push(member.id);
+                    }
+                    setSearchOptions(newSearchOptions);
+                  }}
+                >
+                  {member.twitch_display_name}
+                </Button>
+              ))}
           </Flex>
 
           <Text fontSize="xs" color="gray.500" mb={2}>
-            VOD를 볼 멤버를 선택해주세요 (중복 가능)
+            VOD를 볼 스트리머를 선택해주세요 (중복 가능)
           </Text>
 
           <Heading as="h2" fontSize={"lg"} mt={8} mb={4}>
@@ -222,7 +220,7 @@ const VodPage = () => {
             >
               오래된순
             </Button>
-            <Button
+            {/* <Button
               colorScheme="yellow"
               size={"sm"}
               variant={searchOptions.sort === "view_cnt" ? "solid" : "outline"}
@@ -234,7 +232,7 @@ const VodPage = () => {
               }}
             >
               조회수순
-            </Button>
+            </Button> */}
           </Flex>
 
           <Text fontSize="xs" color="gray.500" mb={2}>
@@ -276,7 +274,11 @@ const VodPage = () => {
             {data?.map((video) => (
               <VideoCard key={video.id} {...video} />
             ))}
+            {data &&
+              data.length < 10 &&
+              [...Array(10 - data.length)].map((_, i) => <Box key={i} />)}
           </SimpleGrid>
+
           <Flex
             justify={
               page === "1" || page === undefined ? "flex-end" : "space-between"

@@ -3,7 +3,7 @@ import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 
 const fetcher = async (args: readonly [string, string]): Promise<any[]> => {
-  const result = await axios.get(`/api/videos?${args[1]}`);
+  const result = await axios.get(`/api/vods?${args[1]}`);
 
   return result.data;
 };
@@ -16,8 +16,8 @@ const fetcherInfinite = async (args: string): Promise<any[]> => {
   return result.data;
 };
 
-// type : all, review, clip
-// bj_id : all, bj_id
+// type : all, stream, live
+// user_id : all, user_id
 // page : 1, 2, 3, ...
 // per_page : 60, 120, 180, ...
 // keyword : string
@@ -28,7 +28,7 @@ const fetcherInfinite = async (args: string): Promise<any[]> => {
 
 export interface VideoParams {
   type?: string;
-  bj_id?: string;
+  user_id?: string;
   page?: number;
   per_page?: number;
   keyword?: string;
@@ -38,9 +38,9 @@ export interface VideoParams {
   end_date?: string;
 }
 
-export const useGetVideos = ({
+export const useGetVods = ({
   type = "all",
-  bj_id = "all",
+  user_id = "all",
   page = 1,
   per_page = 60,
   keyword = "",
@@ -49,14 +49,14 @@ export const useGetVideos = ({
   start_date = "",
   end_date = "",
 }) => {
-  const query = `type=${type}&bj_id=${bj_id}&page=${page}&per_page=${per_page}&keyword=${keyword}&sort=${sort}&sort_type=${sort_type}&start_date=${start_date}&end_date=${end_date}`;
+  const query = `type=${type}&user_id=${user_id}&page=${page}&per_page=${per_page}&keyword=${keyword}&sort=${sort}&sort_type=${sort_type}&start_date=${start_date}&end_date=${end_date}`;
 
   let option = {
     revalidateOnFocus: true,
     revalidateOnReconnect: true,
   };
 
-  const result = useSWR(["/videos", query], fetcher, option);
+  const result = useSWR(["/vods", query], fetcher, option);
 
   return result;
 };
@@ -69,12 +69,12 @@ const getKey = (
   query: string
 ) => {
   if (previousPageData && !previousPageData.length) return null; // reached the end
-  return `/videos?page=${pageIndex + 1}&per_page=${perPage}&${query}`; // SWR key
+  return `/vods?page=${pageIndex + 1}&per_page=${perPage}&${query}`; // SWR key
 };
 
-export const useGetVideosInfinite = ({
+export const useGetVodsInfinite = ({
   type = "all",
-  bj_id = "all",
+  user_id = "all",
   per_page = 60,
   keyword = "",
   sort = "reg_date",
@@ -82,7 +82,7 @@ export const useGetVideosInfinite = ({
   start_date = "",
   end_date = "",
 }) => {
-  const query = `type=${type}&bj_id=${bj_id}&keyword=${keyword}&sort=${sort}&sort_type=${sort_type}&start_date=${start_date}&end_date=${end_date}`;
+  const query = `type=${type}&user_id=${user_id}&keyword=${keyword}&sort=${sort}&sort_type=${sort_type}&start_date=${start_date}&end_date=${end_date}`;
 
   let option = {
     revalidateOnFocus: true,
@@ -95,7 +95,6 @@ export const useGetVideosInfinite = ({
     fetcherInfinite,
     option
   );
-  // const result = useSWRInfinite(["/videos", query], fetcher, option);
 
   return result;
 };
