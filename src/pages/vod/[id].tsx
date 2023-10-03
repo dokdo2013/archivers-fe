@@ -18,6 +18,10 @@ import {
   Text,
   Spinner,
   Badge,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import { useGetVod } from "@/fetchers/get-vod";
 import { useGetStreamer } from "@/fetchers/get-streamer";
@@ -114,6 +118,19 @@ const VodId = () => {
 
           <Flex mt={2} align={"center"}></Flex>
         </Box>
+
+        {vod?.is_live ? (
+          <Alert status="warning" mt={3} borderRadius={"md"}>
+            <AlertIcon />
+            <AlertTitle>실시간 다시보기는 알파 버전입니다</AlertTitle>
+            <AlertDescription>
+              영상 부분 처리 속도에 따라 재생 시간이 최근에 가까울 수록 재생이
+              되지 않거나 이상한 소리가 나오는 등 문제가 발생할 수 있습니다.
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <div></div>
+        )}
       </Container>
     </div>
   );
