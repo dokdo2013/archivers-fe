@@ -28,6 +28,7 @@ export default async function handler(
   const query = supabase
     .from("stream")
     .select("*")
+    .is("deleted_at", null)
     .order("id", { ascending: false });
   const { data, error } = await query;
 

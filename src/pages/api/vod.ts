@@ -15,7 +15,11 @@ export default async function handler(
   // query
   const supabase = getClient();
 
-  const query = supabase.from("stream").select("*").eq("stream_id", stream_id);
+  const query = supabase
+    .from("stream")
+    .select("*")
+    .eq("stream_id", stream_id)
+    .is("deleted_at", null);
   const { data, error } = await query;
 
   if (error) {

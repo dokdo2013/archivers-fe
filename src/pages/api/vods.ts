@@ -75,6 +75,7 @@ export default async function handler(
   const baseQuery = supabase
     .from("stream")
     .select("*")
+    .is("deleted_at", null)
     .order(sanitezedSort, { ascending: sort_type === "asc" })
     .range(
       pageNumber * perPageNumber - perPageNumber,
