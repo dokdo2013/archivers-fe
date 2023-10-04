@@ -4,6 +4,7 @@ const nextConfig = {
   output: "standalone",
   images: {
     domains: ["archivers.app", "static-cdn.jtvnw.net"],
+    unoptimized: true,
   },
 };
 
