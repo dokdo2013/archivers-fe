@@ -1,15 +1,8 @@
 import { useGetLive } from "@/fetchers/get-live";
 import { useGetStreamer } from "@/fetchers/get-streamer";
 import { showBjName, showTime } from "@/utils/util";
-import {
-  AspectRatio,
-  Box,
-  Flex,
-  Image,
-  Img,
-  Skeleton,
-  Text,
-} from "@chakra-ui/react";
+import { AspectRatio, Box, Flex, Img, Skeleton, Text } from "@chakra-ui/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -35,12 +28,9 @@ const VideoTypeBadge = (type: any) => {
 
 const VideoCard = (video: any) => {
   const date = showTime(video?.start_at);
-  const [isImgLoaded, setIsImgLoaded] = useState(false);
-
   const link = `/vod/${video?.stream_id}`;
 
   const { data: streamer } = useGetStreamer(video?.streamer_id);
-  // const { data: isLive } = useGetLive(streamer?.twitch_name);
 
   return (
     <Flex>
@@ -48,18 +38,15 @@ const VideoCard = (video: any) => {
         <Link href={link} className="relative min-h-[140px]">
           <VideoTypeBadge type={video.is_live ? "live" : "vod"} />
           <Flex>
-            {!isImgLoaded && (
-              <AspectRatio ratio={16 / 9} w={"100%"}>
-                <Skeleton borderRadius="lg" w={"100%"} h={"100%"} />
-              </AspectRatio>
-            )}
-            <Img
-              src={video.thumbnail_url}
-              alt={video.title}
-              borderRadius="lg"
-              loading="lazy"
-              onLoad={() => setIsImgLoaded(true)}
-            />
+            <AspectRatio ratio={16 / 9} w={"100%"}>
+              <Image
+                src={video.thumbnail_url}
+                alt={video.title}
+                fill
+                className="rounded-lg bg-gray-100"
+                loading="lazy"
+              />
+            </AspectRatio>
           </Flex>
         </Link>
         <Flex direction={"row"} mt={2} gap={2}>

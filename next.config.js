@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   output: "standalone",
   images: {
-    domains: ["videoimg.afreecatv.com", "iflv14.afreecatv.com"],
+    domains: ["archivers.app", "static-cdn.jtvnw.net"],
   },
 };
 
