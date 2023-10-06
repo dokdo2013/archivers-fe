@@ -21,6 +21,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import dayjs from "dayjs";
+import Head from "next/head";
 import Link from "next/link";
 
 const StreamerPage = () => {
@@ -34,6 +35,10 @@ const StreamerPage = () => {
 
   return (
     <>
+      <Head>
+        <title>아카이버스 스트리머 - Archivers</title>
+      </Head>
+
       <Container p={4} maxW="container.lg">
         <Flex align={"center"} justify={"space-between"} mb={5} wrap={"wrap"}>
           <Heading as="h1" size="md">

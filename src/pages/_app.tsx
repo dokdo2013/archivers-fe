@@ -92,11 +92,6 @@ function AppLayout() {
 
   return (
     <>
-      <Head>
-        <title>아카이버스 - Archivers</title>
-        <meta name="description" content="아카이버스 - Archivers" />
-        <link rel="icon" href="/Archivers_A.png" />
-      </Head>
       <Box
         bg={useColorModeValue("gray.100", "gray.900")}
         px={4}
@@ -174,7 +169,7 @@ function AppLayout() {
   );
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
       <AppLayout />
@@ -184,5 +179,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </ChakraProvider>
   );
 }
-
-export default MyApp;

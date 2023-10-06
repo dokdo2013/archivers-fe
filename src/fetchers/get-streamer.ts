@@ -41,3 +41,44 @@ export const useGetStreamerByName = (streamer_name: string) => {
 
   return result;
 };
+
+export const serverGetStreamer = async (host: string, streamer_id: number) => {
+  const result = await axios
+    .get(`//${host}/api/streamer?streamer_id=${streamer_id}`)
+    .catch((err) => {
+      console.log(err);
+      return null;
+    });
+
+  if (!result) {
+    return null;
+  }
+
+  if (result.data.length === 0) {
+    return null;
+  }
+
+  return result.data[0];
+};
+
+export const serverGetStreamerByName = async (
+  host: string,
+  streamer_name: string
+) => {
+  const result = await axios
+    .get(`//${host}/api/streamer?streamer_name=${streamer_name}`)
+    .catch((err) => {
+      console.log(err);
+      return null;
+    });
+
+  if (!result) {
+    return null;
+  }
+
+  if (result.data.length === 0) {
+    return null;
+  }
+
+  return result.data[0];
+};

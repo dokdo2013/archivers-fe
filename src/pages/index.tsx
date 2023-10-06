@@ -20,6 +20,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import dayjs from "dayjs";
+import Head from "next/head";
 import Link from "next/link";
 
 const IndexPage = () => {
@@ -36,6 +37,10 @@ const IndexPage = () => {
 
   return (
     <>
+      <Head>
+        <title>아카이버스 - Archivers</title>
+        <meta name="description" content="아카이버스 - Archivers" />
+      </Head>
       <Box p={4}>
         <Flex align={"center"} justify={"space-between"} mb={5} wrap={"wrap"}>
           <Heading as="h2" size="md">

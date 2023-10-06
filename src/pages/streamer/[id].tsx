@@ -3,7 +3,11 @@ import VideoCard from "@/components/VideoCard";
 import UpdateInfo from "@/constants/update.constant";
 import { useGetLive } from "@/fetchers/get-live";
 import { useGetNotices } from "@/fetchers/get-notices";
-import { useGetStreamer, useGetStreamerByName } from "@/fetchers/get-streamer";
+import {
+  serverGetStreamerByName,
+  useGetStreamer,
+  useGetStreamerByName,
+} from "@/fetchers/get-streamer";
 import { useGetStreamers } from "@/fetchers/get-streamers";
 import { useGetTwapiName } from "@/fetchers/get-twapi-name";
 import { useGetVods } from "@/fetchers/get-vods";
@@ -23,17 +27,57 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const StreamerPage = () => {
+export async function getServerSideProps(context: any) {
+  const { id, tab } = context.query;
+  const { host } = context.req.headers;
+
+  if (!id || !host) {
+    context.res.statusCode = 404;
+    return {
+      props: {
+        statusCode: 404,
+        streamer: null,
+      },
+    };
+  } else if (Array.isArray(id)) {
+    context.res.statusCode = 404;
+    return {
+      props: {
+        statusCode: 404,
+        streamer: null,
+      },
+    };
+  }
+
+  const streamer = await serverGetStreamerByName(host, id);
+
+  if (!streamer) {
+    context.res.statusCode = 404;
+    return {
+      props: {
+        statusCode: 404,
+        streamer: null,
+      },
+    };
+  }
+
+  return {
+    props: {
+      statusCode: 200,
+      streamer,
+    },
+  };
+}
+
+const StreamerPage = ({ streamer }: any) => {
   const router = useRouter();
   const { id, tab } = router.query;
 
   const [currentTab, setCurrentTab] = useState(tab || "vod");
-  const { data: streamer, isLoading: isStreamerLoading } = useGetStreamerByName(
-    id as string
-  );
 
   const { data, error, isLoading } = useGetVods({
     page: 1,
@@ -43,6 +87,26 @@ const StreamerPage = () => {
 
   return (
     <>
+      <Head>
+        <title>{`${streamer?.twitch_display_name} - Archivers`}</title>
+        <meta
+          name="description"
+          content={`${streamer?.twitch_display_name} (${streamer?.twitch_name}) - Archivers`}
+        />
+        <meta
+          property="og:title"
+          content={`${streamer?.twitch_display_name} - Archivers`}
+        />
+        <meta
+          property="og:description"
+          content={`${streamer?.twitch_display_name} (${streamer?.twitch_name}) - Archivers`}
+        />
+        <meta property="og:image" content={streamer?.profile_image_url} />
+        <meta
+          property="og:url"
+          content={`https://archivers.in/streamer/${streamer?.twitch_name}`}
+        />
+      </Head>
       <Container p={4} maxW="container.lg">
         <Flex gap={3} align={"center"}>
           <a

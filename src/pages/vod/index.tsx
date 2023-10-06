@@ -20,6 +20,7 @@ import { useDebouncedValue, useWindowScroll } from "@mantine/hooks";
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import leaven from "@/constants/leaven.constant";
 import { useGetStreamers } from "@/fetchers/get-streamers";
+import Head from "next/head";
 
 const VodPage = () => {
   // pagination with query
@@ -64,6 +65,9 @@ const VodPage = () => {
 
   return (
     <Box p={4}>
+      <Head>
+        <title>아카이버스 다시보기 - Archivers</title>
+      </Head>
       <Flex
         flexWrap={"nowrap"}
         justifyContent={"space-between"}

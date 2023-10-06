@@ -1,14 +1,7 @@
 import "vidstack/styles/defaults.css";
 import "vidstack/styles/community-skin/video.css";
 
-import {
-  MediaCommunitySkin,
-  MediaLiveIndicator,
-  MediaOutlet,
-  MediaPlayer,
-  MediaPoster,
-} from "@vidstack/react";
-import { useRouter } from "next/router";
+import { MediaCommunitySkin, MediaOutlet, MediaPlayer } from "@vidstack/react";
 import {
   Avatar,
   Box,
@@ -16,31 +9,80 @@ import {
   Flex,
   Heading,
   Text,
-  Spinner,
   Badge,
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
 } from "@chakra-ui/react";
-import { useGetVod } from "@/fetchers/get-vod";
-import { useGetStreamer } from "@/fetchers/get-streamer";
+import { serverGetVod } from "@/fetchers/get-vod";
+import { serverGetStreamer } from "@/fetchers/get-streamer";
 import { showTime } from "@/utils/util";
 import Link from "next/link";
+import Head from "next/head";
+import { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
 
-const VodId = () => {
-  const router = useRouter();
-  const { id } = router.query;
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { id } = context.query;
+  const { host } = context.req.headers;
 
-  const { data: vod, error, isLoading } = useGetVod(id as string);
-  const {
-    data: streamer,
-    error: streamerError,
-    isLoading: isStreamerLoading,
-  } = useGetStreamer(vod?.streamer_id);
+  if (!id || !host) {
+    context.res.statusCode = 404;
+    return {
+      props: {
+        statusCode: 404,
+        vod: null,
+        streamer: null,
+      },
+    };
+  } else if (Array.isArray(id)) {
+    context.res.statusCode = 404;
+    return {
+      props: {
+        statusCode: 404,
+        vod: null,
+        streamer: null,
+      },
+    };
+  }
+
+  const vod = await serverGetVod(host, id);
+  const streamer = await serverGetStreamer(host, vod?.streamer_id);
+
+  if (!vod || !streamer) {
+    context.res.statusCode = 404;
+    return {
+      props: {
+        statusCode: 404,
+        vod: null,
+        streamer: null,
+      },
+    };
+  }
+
+  return {
+    props: {
+      statusCode: 200,
+      vod,
+      streamer,
+    },
+  };
+}
+
+const VodId = ({ vod, streamer }: any) => {
+  const { id } = useRouter().query;
 
   return (
     <div>
+      <Head>
+        <title>{vod?.title} - Archivers</title>
+        <meta name="description" content={vod?.title} />
+        <meta property="og:title" content={vod?.title} />
+        <meta property="og:description" content={vod?.title} />
+        <meta property="og:image" content={vod?.thumbnail_url} />
+        <meta property="og:url" content={`https://archivers.app/vod/${id}`} />
+      </Head>
       <Container maxW="container.xl" p={0}>
         {vod ? (
           <MediaPlayer
