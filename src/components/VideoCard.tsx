@@ -26,6 +26,10 @@ const VideoTypeBadge = (type: any) => {
   );
 };
 
+const getLiveThumbnailAddress = (streamer: any) => {
+  return `https://static-cdn.jtvnw.net/previews-ttv/live_user_${streamer?.twitch_name}-320x180.jpg`;
+};
+
 const VideoCard = (video: any) => {
   const date = showTime(video?.start_at);
   const link = `/vod/${video?.stream_id}`;
@@ -40,7 +44,11 @@ const VideoCard = (video: any) => {
           <Flex>
             <AspectRatio ratio={16 / 9} w={"100%"}>
               <Image
-                src={video.thumbnail_url}
+                src={
+                  video.is_live
+                    ? getLiveThumbnailAddress(streamer)
+                    : video.thumbnail_url
+                }
                 alt={video.title}
                 fill
                 className="rounded-lg bg-gray-100"

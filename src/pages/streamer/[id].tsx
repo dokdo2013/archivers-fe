@@ -24,11 +24,13 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const StreamerPage = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, tab } = router.query;
 
+  const [currentTab, setCurrentTab] = useState(tab || "vod");
   const { data: streamer, isLoading: isStreamerLoading } = useGetStreamerByName(
     id as string
   );
@@ -61,6 +63,30 @@ const StreamerPage = () => {
               {streamer?.twitch_name}
             </Text>
           </Flex>
+        </Flex>
+
+        <Flex mt={8} gap={2}>
+          <Button
+            colorScheme="blue"
+            variant={currentTab === "vod" ? "solid" : "outline"}
+            onClick={() => {
+              setCurrentTab("vod");
+              router.push(`/streamer/${id}?tab=vod`);
+            }}
+          >
+            다시보기
+          </Button>
+          <Button
+            isDisabled
+            colorScheme="blue"
+            variant={currentTab === "info" ? "solid" : "outline"}
+            onClick={() => {
+              setCurrentTab("info");
+              router.push(`/streamer/${id}?tab=info`);
+            }}
+          >
+            정보 (준비중)
+          </Button>
         </Flex>
 
         <Flex direction={"column"} w={"100%"} mt={8}>
