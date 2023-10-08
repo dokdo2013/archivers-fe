@@ -76,7 +76,7 @@ const VodId = ({ vod, streamer }: any) => {
   return (
     <div>
       <Head>
-        <title>{vod?.title} - Archivers</title>
+        <title>{`${vod?.title} - Archivers`}</title>
         <meta name="description" content={vod?.title} />
         <meta property="og:title" content={vod?.title} />
         <meta property="og:description" content={vod?.title} />
