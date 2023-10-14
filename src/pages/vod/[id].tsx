@@ -82,8 +82,22 @@ const VodId = ({ vod, streamer }: any) => {
         <meta name="description" content={vod?.title} />
         <meta property="og:title" content={vod?.title} />
         <meta property="og:description" content={vod?.title} />
-        <meta property="og:image" content={vod?.thumbnail_url} />
+        <meta
+          property="og:image"
+          content={`https://archivers.app/api/og?type=vod&id=${id}`}
+        />
         <meta property="og:url" content={`https://archivers.app/vod/${id}`} />
+        <meta property="twitter:card" content={`${vod?.title} - Archivers`} />
+        <meta
+          property="twitter:url"
+          content={`https://archivers.app/vod/${id}`}
+        />
+        <meta property="twitter:title" content={vod?.title} />
+        <meta property="twitter:description" content={vod?.title} />
+        <meta
+          property="twitter:image"
+          content={`https://archivers.app/api/og?type=vod&id=${id}`}
+        />
       </Head>
       <Container maxW="container.xl" p={0}>
         {vod ? (
