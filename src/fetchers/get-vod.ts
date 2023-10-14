@@ -18,11 +18,21 @@ export const useGetVod = (stream_id: string) => {
   return result;
 };
 
-export const serverGetVod = async (host: string, stream_id: string) => {
-  const result = await axios
-    .get(`//${host}/api/vod?stream_id=${stream_id}`)
+export const serverGetVod = async (
+  host: string,
+  stream_id: string,
+  isHttps = true
+) => {
+  const protocol = isHttps ? "https" : "http";
+
+  const result = await fetch(
+    `${protocol}://${host}/api/vod?stream_id=${stream_id}`,
+    {
+      method: "GET",
+    }
+  )
     .then((res) => {
-      return res.data;
+      return res.json();
     })
     .catch((err) => {
       console.log(err);

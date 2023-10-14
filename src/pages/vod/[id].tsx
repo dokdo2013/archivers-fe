@@ -22,6 +22,7 @@ import Link from "next/link";
 import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
+import dayjs from "dayjs";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;
@@ -47,8 +48,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const vod = await serverGetVod(host, id);
-  const streamer = await serverGetStreamer(host, vod?.streamer_id);
+  const isHttps = host.includes("localhost") ? false : true;
+  const vod = await serverGetVod(host, id, isHttps);
+  const streamer = await serverGetStreamer(host, vod?.streamer_id, isHttps);
 
   if (!vod || !streamer) {
     context.res.statusCode = 404;
@@ -93,6 +95,7 @@ const VodId = ({ vod, streamer }: any) => {
             // thumbnails="https://media-files.vidstack.io/sprite-fight/thumbnails.vtt"
             aspectRatio={16 / 9}
             crossorigin=""
+            className="rounded-tl-none rounded-tr-none"
           >
             <MediaOutlet>
               {/* <MediaPoster alt="Girl walks into sprite gnomes around her friend on a campfire in danger!" /> */}
@@ -152,7 +155,8 @@ const VodId = ({ vod, streamer }: any) => {
                 </Text>
 
                 <Text fontSize={"md"} color={"gray.500"}>
-                  {showTime(vod?.start_at)}
+                  {dayjs(vod?.start_at).format("YYYY/MM/DD HH:mm")}
+                  {/* {showTime(vod?.start_at)} */}
                 </Text>
               </Flex>
             </Flex>

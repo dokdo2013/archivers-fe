@@ -1,27 +1,15 @@
-import StreamerCard from "@/components/StreamerCard";
+import { TwipClipLogo } from "@/components/TwipClipLogo";
 import VideoCard from "@/components/VideoCard";
-import UpdateInfo from "@/constants/update.constant";
-import { useGetLive } from "@/fetchers/get-live";
-import { useGetNotices } from "@/fetchers/get-notices";
-import {
-  serverGetStreamerByName,
-  useGetStreamer,
-  useGetStreamerByName,
-} from "@/fetchers/get-streamer";
-import { useGetStreamers } from "@/fetchers/get-streamers";
-import { useGetTwapiName } from "@/fetchers/get-twapi-name";
+import { serverGetStreamerByName } from "@/fetchers/get-streamer";
 import { useGetVods } from "@/fetchers/get-vods";
-import { getBjInfo, getStreamingLink, showTime } from "@/utils/util";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
-  Alert,
-  AlertIcon,
   Avatar,
   Box,
   Button,
   Container,
   Flex,
   Heading,
-  Image,
   SimpleGrid,
   Spinner,
   Text,
@@ -53,7 +41,8 @@ export async function getServerSideProps(context: any) {
     };
   }
 
-  const streamer = await serverGetStreamerByName(host, id);
+  const isHttps = host.includes("localhost") ? false : true;
+  const streamer = await serverGetStreamerByName(host, id, isHttps);
 
   if (!streamer) {
     context.res.statusCode = 404;
@@ -76,6 +65,7 @@ export async function getServerSideProps(context: any) {
 const StreamerPage = ({ streamer }: any) => {
   const router = useRouter();
   const { id, tab } = router.query;
+  const isLightMode = useColorModeValue(true, false);
 
   const [currentTab, setCurrentTab] = useState(tab || "vod");
 
@@ -141,6 +131,22 @@ const StreamerPage = ({ streamer }: any) => {
             다시보기
           </Button>
           <Button
+            colorScheme="blue"
+            variant={currentTab === "clip" ? "solid" : "outline"}
+            onClick={() => {
+              window.open(
+                `https://vod.twip.kr/creator/${streamer?.twitch_name}`
+              );
+            }}
+          >
+            <Flex gap={2}>
+              <Box w={100}>
+                <TwipClipLogo isLightMode={isLightMode} />
+              </Box>
+              <ExternalLinkIcon color={isLightMode ? "purple" : "white"} />
+            </Flex>
+          </Button>
+          <Button
             isDisabled
             colorScheme="blue"
             variant={currentTab === "info" ? "solid" : "outline"}
@@ -153,35 +159,44 @@ const StreamerPage = ({ streamer }: any) => {
           </Button>
         </Flex>
 
-        <Flex direction={"column"} w={"100%"} mt={8}>
-          {isLoading && (
-            <Flex align={"center"} justify="center">
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
-              />
-            </Flex>
-          )}
-          <SimpleGrid columns={5} spacing={5} minChildWidth="200px" w={"100%"}>
-            {data?.map((video) => (
-              <VideoCard key={video.id} {...video} />
-            ))}
-            {data &&
-              data.length < 10 &&
-              [...Array(10 - data.length)].map((_, i) => <Box key={i} />)}
-          </SimpleGrid>
+        {currentTab === "vod" ? (
+          <Flex direction={"column"} w={"100%"} mt={8}>
+            {isLoading && (
+              <Flex align={"center"} justify="center">
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="xl"
+                />
+              </Flex>
+            )}
+            <SimpleGrid
+              columns={5}
+              spacing={5}
+              minChildWidth="200px"
+              w={"100%"}
+            >
+              {data?.map((video) => (
+                <VideoCard key={video.id} {...video} />
+              ))}
+              {data &&
+                data.length < 10 &&
+                [...Array(10 - data.length)].map((_, i) => <Box key={i} />)}
+            </SimpleGrid>
 
-          {data && data.length === 0 ? (
-            <Flex justify={"center"}>
-              <Text>아직 다시보기가 없어요 😢</Text>
-            </Flex>
-          ) : (
-            <></>
-          )}
-        </Flex>
+            {data && data.length === 0 ? (
+              <Flex justify={"center"}>
+                <Text>아직 다시보기가 없어요 😢</Text>
+              </Flex>
+            ) : (
+              <></>
+            )}
+          </Flex>
+        ) : (
+          <div></div>
+        )}
       </Container>
     </>
   );

@@ -42,9 +42,22 @@ export const useGetStreamerByName = (streamer_name: string) => {
   return result;
 };
 
-export const serverGetStreamer = async (host: string, streamer_id: number) => {
-  const result = await axios
-    .get(`//${host}/api/streamer?streamer_id=${streamer_id}`)
+export const serverGetStreamer = async (
+  host: string,
+  streamer_id: number,
+  isHttps = true
+) => {
+  const protocol = isHttps ? "https" : "http";
+
+  const result = await fetch(
+    `${protocol}://${host}/api/streamer?streamer_id=${streamer_id}`,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => {
+      return res.json();
+    })
     .catch((err) => {
       console.log(err);
       return null;
@@ -54,19 +67,29 @@ export const serverGetStreamer = async (host: string, streamer_id: number) => {
     return null;
   }
 
-  if (result.data.length === 0) {
+  if (result.length === 0) {
     return null;
   }
 
-  return result.data[0];
+  return result[0];
 };
 
 export const serverGetStreamerByName = async (
   host: string,
-  streamer_name: string
+  streamer_name: string,
+  isHttps = true
 ) => {
-  const result = await axios
-    .get(`//${host}/api/streamer?streamer_name=${streamer_name}`)
+  const protocol = isHttps ? "https" : "http";
+
+  const result = await fetch(
+    `${protocol}://${host}/api/streamer?streamer_name=${streamer_name}`,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => {
+      return res.json();
+    })
     .catch((err) => {
       console.log(err);
       return null;
@@ -76,9 +99,9 @@ export const serverGetStreamerByName = async (
     return null;
   }
 
-  if (result.data.length === 0) {
+  if (result.length === 0) {
     return null;
   }
 
-  return result.data[0];
+  return result[0];
 };

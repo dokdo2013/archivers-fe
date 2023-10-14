@@ -7,10 +7,31 @@ import Link from "next/link";
 import { useState } from "react";
 
 const VideoTypeBadge = (type: any) => {
+  let typeText = "";
+  let typeColor = "";
+
+  switch (type?.type) {
+    case "vod":
+      typeText = "다시보기";
+      typeColor = "blue.500";
+      break;
+    case "live":
+      typeText = "LIVE";
+      typeColor = "red.500";
+      break;
+    case "clip":
+      typeText = "클립";
+      typeColor = "orange.500";
+      break;
+    default:
+      typeText = "";
+      break;
+  }
+
   return (
     <>
       <Box
-        backgroundColor={type?.type === "vod" ? "blue.500" : "red.500"}
+        backgroundColor={typeColor}
         position={"absolute"}
         color={"white"}
         borderRadius={"lg"}
@@ -20,7 +41,7 @@ const VideoTypeBadge = (type: any) => {
         fontSize={"sm"}
         className="px-2 py-1 block w-[-webkit-max-content] leading-[normal]"
       >
-        {type?.type === "vod" ? "다시보기" : "LIVE"}
+        {typeText}
       </Box>
     </>
   );
@@ -29,6 +50,21 @@ const VideoTypeBadge = (type: any) => {
 const getLiveThumbnailAddress = (streamer: any) => {
   return `https://static-cdn.jtvnw.net/previews-ttv/live_user_${streamer?.twitch_name}-320x180.jpg`;
 };
+
+// interface ISanitizedVideo {
+//   id: string;
+//   title: string;
+//   start_at: string;
+//   thumbnail_url: string;
+//   type: "vod" | "clip" | "live";
+//   link: string;
+//   isExternalLink: boolean;
+//   date: string;
+//   duration?: number;
+//   view_count?: number;
+//   like_count?: number;
+//   comment_count?: number;
+// }
 
 const VideoCard = (video: any) => {
   const date = showTime(video?.start_at);
