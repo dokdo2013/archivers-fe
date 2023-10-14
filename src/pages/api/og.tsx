@@ -180,6 +180,7 @@ const getVodImage = async (vod: IVod, streamer: IStreamer) => {
           flexDirection: "column",
           width: "100%",
           height: "100%",
+          background: "#e6e6e6",
         }}
       >
         <div
@@ -321,7 +322,7 @@ const getDefaultImage = async () => {
       >
         <span
           style={{
-            fontSize: 26,
+            fontSize: 48,
             fontFamily: "PyeongChangPeace-Bold",
           }}
         >
