@@ -1,5 +1,7 @@
 import StreamerCard from "@/components/StreamerCard";
 import VideoCard from "@/components/VideoCard";
+import StreamerCardSkeleton from "@/components/skeleton/StreamerCardSkeleton";
+import VideoCardSkeleton from "@/components/skeleton/VideoCardSkeleton";
 import UpdateInfo from "@/constants/update.constant";
 import { useGetLive } from "@/fetchers/get-live";
 import { useGetNotices } from "@/fetchers/get-notices";
@@ -60,11 +62,16 @@ const IndexPage = () => {
           </Flex>
         </Flex>
 
-        {isStreamerLoading && <div>Loading...</div>}
+        {/* {isStreamerLoading && <div>Loading...</div>} */}
         <Flex gap={2} mb={5} wrap={"wrap"} maxH={"140px"} overflow={"hidden"}>
-          {streamers?.map((streamer) => (
+          {isStreamerLoading
+            ? [...Array(8)].map((_, i) => <StreamerCardSkeleton key={i} />)
+            : streamers?.map((streamer) => (
+                <StreamerCard streamer={streamer} key={streamer.id} />
+              ))}
+          {/* {streamers?.map((streamer) => (
             <StreamerCard streamer={streamer} key={streamer.id} />
-          ))}
+          ))} */}
         </Flex>
         <SimpleGrid columns={5} spacing={5} minChildWidth="240px">
           {/* {data?.map((video) => (
@@ -83,11 +90,12 @@ const IndexPage = () => {
           </Link>
         </Flex>
 
-        {isLoading && <div>Loading...</div>}
         <SimpleGrid columns={5} spacing={5} minChildWidth="240px">
-          {data?.map((video) => (
-            <VideoCard key={video.id} {...video} />
-          ))}
+          {isLoading
+            ? [...Array(40)].map((_, i) => <VideoCardSkeleton key={i} />)
+            : data?.map((video) => <VideoCard key={video.id} {...video} />)}
+
+          {/* For Dummy Space */}
           {data &&
             data.length < 10 &&
             [...Array(10 - data.length)].map((_, i) => <Box key={i} />)}
