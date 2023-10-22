@@ -149,11 +149,13 @@ const VodId = ({ vod, streamer }: any) => {
                 <Heading as="h1" size="md">
                   {vod?.title}
                 </Heading>
-                <Link href={`/live/${id}`}>
-                  <Button colorScheme="red" size="xs" leftIcon={<ViewIcon />}>
-                    1080p LIVE
-                  </Button>
-                </Link>
+                {vod?.is_live && (
+                  <Link href={`/live/${id}`}>
+                    <Button colorScheme="red" size="xs" leftIcon={<ViewIcon />}>
+                      1080p LIVE
+                    </Button>
+                  </Link>
+                )}
               </Flex>
 
               <Flex wrap={"wrap"} gap={1}>
