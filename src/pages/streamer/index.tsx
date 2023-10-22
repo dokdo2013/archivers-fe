@@ -1,5 +1,5 @@
-import StreamerCard from "@/components/StreamerCard";
-import VideoCard from "@/components/VideoCard";
+import StreamerCard from "@/components/card/StreamerCard";
+import VideoCard from "@/components/card/VideoCard";
 import UpdateInfo from "@/constants/update.constant";
 import { useGetLive } from "@/fetchers/get-live";
 import { useGetNotices } from "@/fetchers/get-notices";

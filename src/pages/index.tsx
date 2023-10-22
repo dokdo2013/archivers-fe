@@ -1,5 +1,5 @@
-import StreamerCard from "@/components/StreamerCard";
-import VideoCard from "@/components/VideoCard";
+import StreamerCard from "@/components/card/StreamerCard";
+import VideoCard from "@/components/card/VideoCard";
 import StreamerCardSkeleton from "@/components/skeleton/StreamerCardSkeleton";
 import VideoCardSkeleton from "@/components/skeleton/VideoCardSkeleton";
 import UpdateInfo from "@/constants/update.constant";

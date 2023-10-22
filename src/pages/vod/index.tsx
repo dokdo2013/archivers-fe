@@ -1,4 +1,4 @@
-import VideoCard from "@/components/VideoCard";
+import VideoCard from "@/components/card/VideoCard";
 import { useGetVods } from "@/fetchers/get-vods";
 import {
   Box,
@@ -13,6 +13,7 @@ import {
   Spinner,
   Fade,
   Input,
+  Skeleton,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -21,6 +22,7 @@ import { ChevronUpIcon } from "@chakra-ui/icons";
 import leaven from "@/constants/leaven.constant";
 import { useGetStreamers } from "@/fetchers/get-streamers";
 import Head from "next/head";
+import VideoCardSkeleton from "@/components/skeleton/VideoCardSkeleton";
 
 const VodPage = () => {
   // pagination with query
@@ -58,7 +60,7 @@ const VodPage = () => {
   // Media
   const [isSmall] = useMediaQuery("(min-width: 1088px)", {
     ssr: true,
-    fallback: false, // return false on the server, and re-evaluate on the client side
+    fallback: true, // return false on the server, and re-evaluate on the client side
   });
 
   const [scroll, scrollTo] = useWindowScroll();
@@ -149,6 +151,17 @@ const VodPage = () => {
             >
               전체
             </Button>
+
+            {isStreamerLoading &&
+              [...Array(10)].map((_, i) => (
+                <Skeleton
+                  width="70px"
+                  height="32px"
+                  borderRadius="6px"
+                  key={i}
+                />
+              ))}
+
             {streamers &&
               streamers?.length > 0 &&
               streamers.map((member) => (
@@ -263,21 +276,12 @@ const VodPage = () => {
         </Box>
 
         <Flex direction={"column"} w={"100%"}>
-          {isLoading && (
-            <Flex align={"center"} justify="center">
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
-              />
-            </Flex>
-          )}
+          {isLoading && <Flex align={"center"} justify="center"></Flex>}
           <SimpleGrid columns={5} spacing={5} minChildWidth="240px" w={"100%"}>
-            {data?.map((video) => (
-              <VideoCard key={video.id} {...video} />
-            ))}
+            {isLoading
+              ? [...Array(40)].map((_, i) => <VideoCardSkeleton key={i} />)
+              : data?.map((video) => <VideoCard key={video.id} {...video} />)}
+
             {data &&
               data.length < 10 &&
               [...Array(10 - data.length)].map((_, i) => <Box key={i} />)}

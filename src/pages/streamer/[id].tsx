@@ -1,5 +1,5 @@
-import { TwipClipLogo } from "@/components/TwipClipLogo";
-import VideoCard from "@/components/VideoCard";
+import { TwipClipLogo } from "@/components/logo/TwipClipLogo";
+import VideoCard from "@/components/card/VideoCard";
 import { serverGetStreamerByName } from "@/fetchers/get-streamer";
 import { useGetVods } from "@/fetchers/get-vods";
 import { ExternalLinkIcon } from "@chakra-ui/icons";

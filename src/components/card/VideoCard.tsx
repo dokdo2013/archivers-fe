@@ -1,12 +1,12 @@
-import { useGetLive } from "@/fetchers/get-live";
 import { useGetStreamer } from "@/fetchers/get-streamer";
-import { showBjName, showTime } from "@/utils/util";
-import { AspectRatio, Box, Flex, Img, Skeleton, Text } from "@chakra-ui/react";
+import { showTime } from "@/utils/util";
+import { AspectRatio, Box, Flex, Img, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
-const VideoTypeBadge = (type: any) => {
+const VideoTypeBadge = (type: {
+  type: "vod" | "live" | "clip" | undefined;
+}) => {
   let typeText = "";
   let typeColor = "";
 
@@ -51,26 +51,19 @@ const getLiveThumbnailAddress = (streamer: any) => {
   return `https://static-cdn.jtvnw.net/previews-ttv/live_user_${streamer?.twitch_name}-320x180.jpg`;
 };
 
-// interface ISanitizedVideo {
-//   id: string;
-//   title: string;
-//   start_at: string;
-//   thumbnail_url: string;
-//   type: "vod" | "clip" | "live";
-//   link: string;
-//   isExternalLink: boolean;
-//   date: string;
-//   duration?: number;
-//   view_count?: number;
-//   like_count?: number;
-//   comment_count?: number;
-// }
-
 const VideoCard = (video: any) => {
   const date = showTime(video?.start_at);
   const link = `/vod/${video?.stream_id}`;
 
   const { data: streamer } = useGetStreamer(video?.streamer_id);
+
+  const isThumbnail = true;
+  const thumbnailImageUrl = video.thumbnail_url.replace("public", "320x180");
+  const imageUrl = video.is_live
+    ? getLiveThumbnailAddress(streamer)
+    : isThumbnail
+    ? thumbnailImageUrl
+    : video.thumbnail_url;
 
   return (
     <Flex>
@@ -80,11 +73,7 @@ const VideoCard = (video: any) => {
           <Flex>
             <AspectRatio ratio={16 / 9} w={"100%"}>
               <Image
-                src={
-                  video.is_live
-                    ? getLiveThumbnailAddress(streamer)
-                    : video.thumbnail_url
-                }
+                src={imageUrl}
                 alt={video.title}
                 fill
                 className="rounded-lg bg-gray-100"
