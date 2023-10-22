@@ -53,7 +53,9 @@ const getLiveThumbnailAddress = (streamer: any) => {
 
 const VideoCard = (video: any) => {
   const date = showTime(video?.start_at);
-  const link = `/vod/${video?.stream_id}`;
+  const link = video?.is_live
+    ? `/live/${video?.stream_id}`
+    : `/vod/${video?.stream_id}`;
 
   const { data: streamer } = useGetStreamer(video?.streamer_id);
 

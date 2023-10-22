@@ -11,6 +11,8 @@ export function Chakra({ cookies, children }: any) {
       ? cookieStorageManagerSSR(cookies)
       : localStorageManager;
 
+  console.log(cookies);
+
   return (
     <ChakraProvider colorModeManager={colorModeManager}>
       {children}

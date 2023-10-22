@@ -14,6 +14,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Button,
 } from "@chakra-ui/react";
 import { serverGetVod } from "@/fetchers/get-vod";
 import { serverGetStreamer } from "@/fetchers/get-streamer";
@@ -23,6 +24,7 @@ import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
+import { ViewIcon } from "@chakra-ui/icons";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;
@@ -143,16 +145,16 @@ const VodId = ({ vod, streamer }: any) => {
               />
             </Link>
             <Flex direction={"column"} gap={1}>
-              <Heading as="h1" size="md">
-                {vod?.is_live ? (
-                  <Badge colorScheme="red" fontSize={"md"} mr={2}>
-                    LIVE
-                  </Badge>
-                ) : (
-                  <div></div>
-                )}
-                {vod?.title}
-              </Heading>
+              <Flex gap={2} flexWrap={"wrap"} align="center">
+                <Heading as="h1" size="md">
+                  {vod?.title}
+                </Heading>
+                <Link href={`/live/${id}`}>
+                  <Button colorScheme="red" size="xs" leftIcon={<ViewIcon />}>
+                    1080p LIVE
+                  </Button>
+                </Link>
+              </Flex>
 
               <Flex wrap={"wrap"} gap={1}>
                 <Link
