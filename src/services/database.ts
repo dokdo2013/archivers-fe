@@ -3,7 +3,11 @@ import { createClient } from "@supabase/supabase-js";
 // Create a single supabase client for interacting with your database
 const { SUPABASE_URL, SUPABASE_KEY }: any = process.env;
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: {
+    persistSession: false, //or true
+  },
+});
 
 // create table
 //   public.video (
