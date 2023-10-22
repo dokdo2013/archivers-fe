@@ -26,6 +26,7 @@ import Link from "next/link";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { Chakra } from "@/components/Chakra";
 
 interface Props {
   children: React.ReactNode;
@@ -171,11 +172,13 @@ function AppLayout() {
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <Chakra cookies={pageProps.cookies}>
       <AppLayout />
       <Box pt={"64px"}>
         <Component {...pageProps} />
       </Box>
-    </ChakraProvider>
+    </Chakra>
   );
 }
+
+export { getServerSideProps } from "@/components/Chakra";

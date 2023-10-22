@@ -32,16 +32,14 @@ const IndexPage = () => {
 
   const { data: streamers, isLoading: isStreamerLoading } = useGetStreamers();
 
-  const mainColor = useColorModeValue("gray.100", "gray.700");
-
-  // 업데이트 일자가 3일 이내
-  const hasUpdate = dayjs().diff(dayjs(UpdateInfo[0].date), "day") < 3;
-
   return (
     <>
       <Head>
         <title>아카이버스 - Archivers</title>
-        <meta name="description" content="아카이버스 - Archivers" />
+        <meta
+          name="description"
+          content="무료 트위치 다시보기 서비스 아카이버스. 스트리머나 매니저가 신청하면 무료 트위치 다시보기 녹화 & 실시간 다시보기 서비스를 제공합니다."
+        />
       </Head>
       <Box p={4}>
         <Flex align={"center"} justify={"space-between"} mb={5} wrap={"wrap"}>

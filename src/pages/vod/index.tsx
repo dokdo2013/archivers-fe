@@ -82,7 +82,6 @@ const VodPage = () => {
           borderRadius={"lg"}
           minW={"280px"}
           maxW={isSmall ? "340px" : "100%"}
-          // w={"fit-content"}
           h={"fit-content"}
           pos={isSmall ? "sticky" : "static"}
           top={isSmall ? "80px" : "0"}
