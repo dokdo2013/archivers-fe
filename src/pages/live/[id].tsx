@@ -152,7 +152,7 @@ const LiveId = ({ vod, streamer, host }: any) => {
               className="rounded-tl-none rounded-tr-none"
               // liveEdgeTolerance={20}
             >
-              <MediaOutlet>
+              <MediaOutlet className={isSmall && "p-[calc(100vh-180px)_0_0_0]"}>
                 <MediaLiveIndicator />
                 {/* <MediaPoster alt="Girl walks into sprite gnomes around her friend on a campfire in danger!" /> */}
                 {/* <track
