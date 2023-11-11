@@ -3,4 +3,6 @@
 archivers.app Frontend Repo
 
 ## Tech Stack
+
 - Next.js
+- Supabase
