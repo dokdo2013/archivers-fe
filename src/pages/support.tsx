@@ -10,6 +10,7 @@ import {
 const IntroIndex = () => {
   return (
     <Container maxW="1000px" p={4}>
+      {/* 문의 */}
       <Heading as="h1" fontSize={"xl"}>
         문의
       </Heading>
@@ -42,6 +43,19 @@ const IntroIndex = () => {
           <Button w="100%">버그제보/건의</Button>
         </a>
       </SimpleGrid>
+
+      {/* 서버 상태 */}
+      <Heading as="h1" fontSize={"xl"} mt={10}>
+        서버 상태
+      </Heading>
+
+      <Text fontSize={"md"} mt={4}>
+        서버 상태 및 점검 등 서비스 관련 공지는{" "}
+        <a href="https://haenu.dev" target="_blank" className="text-blue-500">
+          haenu.dev
+        </a>{" "}
+        사이트에서 확인하실 수 있습니다.
+      </Text>
 
       {/* 메뉴 모음 */}
       <Heading as="h1" fontSize={"xl"} mt={10}>
