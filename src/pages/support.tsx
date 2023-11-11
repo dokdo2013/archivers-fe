@@ -57,6 +57,37 @@ const IntroIndex = () => {
         사이트에서 확인하실 수 있습니다.
       </Text>
 
+      {/* Open Source */}
+      <Heading as="h1" fontSize={"xl"} mt={10}>
+        오픈소스 프로젝트
+      </Heading>
+
+      <Text fontSize={"md"} mt={4}>
+        Archivers 서비스는 오픈소스 프로젝트로 진행되고 있습니다. 아래의 GitHub
+        링크에서 소스코드를 확인하실 수 있습니다.
+      </Text>
+
+      <SimpleGrid minChildWidth={"200px"} spacing={4} mt={4}>
+        <a href="https://github.com/dokdo2013/archivers-fe" target="_blank">
+          <Button w="100%">웹 서버 (FE+BE)</Button>
+        </a>
+        <a
+          href="https://github.com/dokdo2013/archivers-listener"
+          target="_blank"
+        >
+          <Button w="100%">미디어 서버</Button>
+        </a>
+        <a
+          href="https://github.com/dokdo2013/archivers-pipeline"
+          target="_blank"
+        >
+          <Button w="100%">녹화 파이프라인</Button>
+        </a>
+        <a href="https://github.com/dokdo2013/archivers-worker" target="_blank">
+          <Button w="100%">녹화 워커</Button>
+        </a>
+      </SimpleGrid>
+
       {/* 메뉴 모음 */}
       <Heading as="h1" fontSize={"xl"} mt={10}>
         후원
