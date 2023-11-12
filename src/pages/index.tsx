@@ -73,7 +73,11 @@ const IndexPage = () => {
           {isStreamerLoading
             ? [...Array(8)].map((_, i) => <StreamerCardSkeleton key={i} />)
             : streamers?.map((streamer) => (
-                <StreamerCard streamer={streamer} key={streamer.id} space={2} />
+                <StreamerCard
+                  streamer={streamer}
+                  key={streamer.id}
+                  space={space}
+                />
               ))}
           {/* {streamers?.map((streamer) => (
             <StreamerCard streamer={streamer} key={streamer.id} />
