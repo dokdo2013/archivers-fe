@@ -24,12 +24,18 @@ export default async function handler(
   //   return;
   // }
 
+  let space = req.query.space || 1;
+  if (typeof space === "string") {
+    space = parseInt(space);
+  }
+
   // query
   const supabase = getClient();
 
   const query = supabase
     .from("streamer")
     .select("*")
+    .eq("space_id", space)
     .order("id", { ascending: false });
 
   if (streamer_id) {

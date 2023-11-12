@@ -64,6 +64,10 @@ export default async function handler(
     res.status(400).json({ name: "Invalid sort_type" });
     return;
   }
+  let space = req.query.space || 1;
+  if (typeof space === "string") {
+    space = parseInt(space);
+  }
 
   // query
   const supabase = getClient();
@@ -76,6 +80,7 @@ export default async function handler(
     .from("stream")
     .select("*")
     .is("deleted_at", null)
+    .eq("space_id", space)
     .order(sanitezedSort, { ascending: sort_type === "asc" })
     .range(
       pageNumber * perPageNumber - perPageNumber,

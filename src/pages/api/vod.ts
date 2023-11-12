@@ -12,6 +12,11 @@ export default async function handler(
     return;
   }
 
+  let space = req.query.space || 1;
+  if (typeof space === "string") {
+    space = parseInt(space);
+  }
+
   // query
   const supabase = getClient();
 
@@ -19,6 +24,7 @@ export default async function handler(
     .from("stream")
     .select("*")
     .eq("stream_id", stream_id)
+    .eq("space_id", space)
     .is("deleted_at", null);
   const { data, error } = await query;
 
