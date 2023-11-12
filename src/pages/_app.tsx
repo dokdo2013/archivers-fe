@@ -58,6 +58,9 @@ const Links = [
 const NavLink = ({ data, onClose }: any) => {
   const router = useRouter();
   const currentPath = router.pathname;
+  const query = router.query;
+  const space = query.space ? Number(query.space) : 1;
+  const spaceParam = space === 1 ? "" : `?space=${space}`;
 
   const bgColor = useColorModeValue("gray.200", "gray.700");
 
@@ -74,7 +77,7 @@ const NavLink = ({ data, onClose }: any) => {
       }}
       // bg={currentPath === data.href ? bgColor : ""}
       bg={data.paths.includes(currentPath) ? bgColor : ""}
-      href={data.href}
+      href={`${data.href}${spaceParam}`}
       onClick={() => {
         if (onClose) {
           onClose();

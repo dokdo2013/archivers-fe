@@ -23,13 +23,15 @@ import {
 import dayjs from "dayjs";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const StreamerPage = () => {
-  const { data, error, isLoading } = useGetVods({
-    page: 1,
-  });
+  const router = useRouter();
+  let query = router.query;
+  const space = query.space ? Number(query.space) : 1;
 
-  const { data: streamers, isLoading: isStreamerLoading } = useGetStreamers();
+  const { data: streamers, isLoading: isStreamerLoading } =
+    useGetStreamers(space);
 
   const mainColor = useColorModeValue("gray.100", "gray.700");
 
@@ -54,7 +56,7 @@ const StreamerPage = () => {
         {isStreamerLoading && <div>Loading...</div>}
         <SimpleGrid minChildWidth={"160px"} spacing={2} mt={4}>
           {streamers?.map((streamer) => (
-            <StreamerCard streamer={streamer} key={streamer.id} />
+            <StreamerCard streamer={streamer} key={streamer.id} space={space} />
           ))}
         </SimpleGrid>
       </Container>

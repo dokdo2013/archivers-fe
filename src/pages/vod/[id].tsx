@@ -27,7 +27,9 @@ import dayjs from "dayjs";
 import { ViewIcon } from "@chakra-ui/icons";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { id } = context.query;
+  const query = context.query;
+  const id = query.id as string;
+  const space = query.space ? Number(query.space) : 1;
   const { host } = context.req.headers;
 
   if (!id || !host) {
@@ -52,7 +54,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const isHttps = host.includes("localhost") ? false : true;
   const vod = await serverGetVod(host, id, isHttps);
-  const streamer = await serverGetStreamer(host, vod?.streamer_id, isHttps);
+  const streamer = await serverGetStreamer(
+    host,
+    vod?.streamer_id,
+    isHttps,
+    space
+  );
 
   if (!vod || !streamer) {
     context.res.statusCode = 404;
@@ -75,7 +82,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const VodId = ({ vod, streamer }: any) => {
-  const { id } = useRouter().query;
+  const router = useRouter();
+  const query = router.query;
+  const id = query.id as string;
 
   return (
     <div>

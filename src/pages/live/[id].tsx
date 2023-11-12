@@ -35,7 +35,9 @@ import dayjs from "dayjs";
 import { RepeatClockIcon } from "@chakra-ui/icons";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { id } = context.query;
+  const query = context.query;
+  const id = query.id as string;
+  let space = query.space ? Number(query.space) : 1;
   let { host } = context.req.headers;
 
   console.log(context.req.headers);
@@ -62,7 +64,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const isHttps = host.includes("localhost") ? false : true;
   const vod = await serverGetVod(host, id, isHttps);
-  const streamer = await serverGetStreamer(host, vod?.streamer_id, isHttps);
+  const streamer = await serverGetStreamer(
+    host,
+    vod?.streamer_id,
+    isHttps,
+    space
+  );
 
   if (!vod || !streamer) {
     context.res.statusCode = 404;

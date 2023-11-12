@@ -24,13 +24,21 @@ import {
 import dayjs from "dayjs";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const IndexPage = () => {
+  const router = useRouter();
+  let query = router.query;
+  const space = query.space ? Number(query.space) : 1;
+  const spaceParam = space === 1 ? "" : `?space=${space}`;
+
   const { data, error, isLoading } = useGetVods({
     page: 1,
+    space,
   });
 
-  const { data: streamers, isLoading: isStreamerLoading } = useGetStreamers();
+  const { data: streamers, isLoading: isStreamerLoading } =
+    useGetStreamers(space);
 
   return (
     <>
@@ -65,7 +73,7 @@ const IndexPage = () => {
           {isStreamerLoading
             ? [...Array(8)].map((_, i) => <StreamerCardSkeleton key={i} />)
             : streamers?.map((streamer) => (
-                <StreamerCard streamer={streamer} key={streamer.id} />
+                <StreamerCard streamer={streamer} key={streamer.id} space={2} />
               ))}
           {/* {streamers?.map((streamer) => (
             <StreamerCard streamer={streamer} key={streamer.id} />

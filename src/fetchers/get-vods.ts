@@ -36,6 +36,7 @@ export interface VideoParams {
   sort_type?: string;
   start_date?: string;
   end_date?: string;
+  space?: number;
 }
 
 export const useGetVods = ({
@@ -48,8 +49,9 @@ export const useGetVods = ({
   sort_type = "desc",
   start_date = "",
   end_date = "",
+  space = 1,
 }) => {
-  const query = `type=${type}&user_id=${user_id}&page=${page}&per_page=${per_page}&keyword=${keyword}&sort=${sort}&sort_type=${sort_type}&start_date=${start_date}&end_date=${end_date}`;
+  const query = `type=${type}&user_id=${user_id}&page=${page}&per_page=${per_page}&keyword=${keyword}&sort=${sort}&sort_type=${sort_type}&start_date=${start_date}&end_date=${end_date}&space=${space}`;
 
   let option = {
     revalidateOnFocus: true,

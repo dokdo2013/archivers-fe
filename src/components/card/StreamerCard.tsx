@@ -8,8 +8,9 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-const StreamerCard = ({ streamer }: any) => {
+const StreamerCard = ({ streamer, space }: any) => {
   const mainColor = useColorModeValue("gray.100", "gray.700");
+  const spaceParam = space === 1 ? "" : `?space=${space}`;
 
   return (
     <Box
@@ -17,7 +18,7 @@ const StreamerCard = ({ streamer }: any) => {
       className={`rounded-lg py-2 px-3`}
       bgColor={mainColor}
     >
-      <Link href={`/streamer/${streamer.twitch_name}`}>
+      <Link href={`/streamer/${streamer.twitch_name}${spaceParam}`}>
         <Flex gap={2} align={"center"}>
           <Avatar
             name={streamer.twitch_name}

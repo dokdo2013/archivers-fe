@@ -53,11 +53,23 @@ const getLiveThumbnailAddress = (streamer: any) => {
 
 const VideoCard = (video: any) => {
   const date = showTime(video?.start_at);
-  const link = video?.is_live
+
+  let link = video?.is_live
     ? `/live/${video?.stream_id}`
     : `/vod/${video?.stream_id}`;
+  if (video?.space_id !== 1) {
+    link += `?space=${video?.space_id}`;
+  }
 
-  const { data: streamer } = useGetStreamer(video?.streamer_id);
+  let streamerLink = `/streamer/${video?.streamer_id}`;
+  if (video?.space_id !== 1) {
+    streamerLink += `?space=${video?.space_id}`;
+  }
+
+  const { data: streamer } = useGetStreamer(
+    video?.streamer_id,
+    video?.space_id
+  );
 
   const isThumbnail = true;
   const thumbnailImageUrl = video.thumbnail_url.replace("public", "320x180");
@@ -91,7 +103,7 @@ const VideoCard = (video: any) => {
             //     ? `https://twitch.tv/${streamer?.twitch_id}`
             //     : `/streamer/${streamer?.twitch_name}`
             // }
-            href={`/streamer/${streamer?.twitch_name}`}
+            href={streamerLink}
             className="min-w-[36px] min-h-[36px]"
           >
             <Img
@@ -112,9 +124,7 @@ const VideoCard = (video: any) => {
             </Text>
             <Flex gap={2}>
               <Text fontSize="xs" className="hover:underline">
-                <Link href={`/streamer/${streamer?.twitch_name}`}>
-                  {streamer?.twitch_display_name}
-                </Link>
+                <Link href={streamerLink}>{streamer?.twitch_display_name}</Link>
               </Text>
               <Text fontSize="xs">{date}</Text>
             </Flex>

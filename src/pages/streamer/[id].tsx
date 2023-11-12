@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 export async function getServerSideProps(context: any) {
-  const { id, tab } = context.query;
+  const { id, tab, space } = context.query;
   const { host } = context.req.headers;
 
   if (!id || !host) {
@@ -42,7 +42,7 @@ export async function getServerSideProps(context: any) {
   }
 
   const isHttps = host.includes("localhost") ? false : true;
-  const streamer = await serverGetStreamerByName(host, id, isHttps);
+  const streamer = await serverGetStreamerByName(host, id, isHttps, space || 1);
 
   if (!streamer) {
     context.res.statusCode = 404;
@@ -64,7 +64,7 @@ export async function getServerSideProps(context: any) {
 
 const StreamerPage = ({ streamer }: any) => {
   const router = useRouter();
-  const { id, tab } = router.query;
+  const { id, tab, space } = router.query;
   const isLightMode = useColorModeValue(true, false);
 
   const [currentTab, setCurrentTab] = useState(tab || "vod");
@@ -73,6 +73,7 @@ const StreamerPage = ({ streamer }: any) => {
     page: 1,
     per_page: 1000,
     user_id: streamer ? (streamer?.id as string) : "undefined",
+    space: Number(space) || 1,
   });
 
   return (

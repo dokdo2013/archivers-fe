@@ -27,7 +27,10 @@ import VideoCardSkeleton from "@/components/skeleton/VideoCardSkeleton";
 const VodPage = () => {
   // pagination with query
   const router = useRouter();
-  const { page } = router.query;
+  const query = router.query;
+  const page = query.page as string;
+  const space = query.space ? Number(query.space) : 1;
+  const spaceParam = space === 1 ? "" : `?space=${space}`;
   const [searchKeyword, setSearchKeyword] = useState("");
   const [debouncedSearchKeyword] = useDebouncedValue(searchKeyword, 200);
   const [searchOptions, setSearchOptions] = useState({
@@ -47,9 +50,11 @@ const VodPage = () => {
     sort: searchOptions.sort,
     sort_type: searchOptions.sort_type,
     keyword: debouncedSearchKeyword,
+    space,
   });
 
-  const { data: streamers, isLoading: isStreamerLoading } = useGetStreamers();
+  const { data: streamers, isLoading: isStreamerLoading } =
+    useGetStreamers(space);
 
   useEffect(() => {
     if (!page && page === "") {
