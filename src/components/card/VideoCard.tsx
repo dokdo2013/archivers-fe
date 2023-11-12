@@ -61,15 +61,15 @@ const VideoCard = (video: any) => {
     link += `?space=${video?.space_id}`;
   }
 
-  let streamerLink = `/streamer/${video?.streamer_id}`;
-  if (video?.space_id !== 1) {
-    streamerLink += `?space=${video?.space_id}`;
-  }
-
   const { data: streamer } = useGetStreamer(
     video?.streamer_id,
     video?.space_id
   );
+
+  let streamerLink = `/streamer/${streamer?.twitch_name}`;
+  if (video?.space_id !== 1) {
+    streamerLink += `?space=${video?.space_id}`;
+  }
 
   const isThumbnail = true;
   const thumbnailImageUrl = video.thumbnail_url.replace("public", "320x180");
